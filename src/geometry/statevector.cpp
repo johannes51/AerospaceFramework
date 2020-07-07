@@ -4,6 +4,8 @@
 #include "tensor.h"
 #include "vector.h"
 
+using namespace asf::geometry;
+
 StateVector::StateVector(const Frame* frame)
     : position_(std::make_shared<Vector>(frame, TransformationBehaviour::Position))
     , velocity_(std::make_shared<Vector>(frame, TransformationBehaviour::Velocity))

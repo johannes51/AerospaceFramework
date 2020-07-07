@@ -2,6 +2,8 @@
 
 #include "vector.h"
 
+using namespace asf::geometry;
+
 Tensor::Tensor(const Frame* frame, Eigen::Matrix3d matrix)
     : frame_(frame)
     , matrix_(matrix)

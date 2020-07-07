@@ -2,11 +2,14 @@
 
 #include "frameimpl.h"
 
+namespace asf {
+namespace geometry {
+
 class ECI : public FrameImpl {
 public:
   ECI(const Frame* parent);
   virtual ~ECI() = default;
-  DISABLE_COPY_AND_MOVE(ECI)
+  ASF_DISABLE_COPY_AND_MOVE(ECI)
 
 protected:
   virtual FrameType type() const override { return FrameType::ECI; }
@@ -16,3 +19,6 @@ private:
   virtual Vector unwind(const Vector& from) const override;
   virtual Vector embed(const Vector& from) const override;
 };
+
+} // namespace geometry
+} // namespace asf

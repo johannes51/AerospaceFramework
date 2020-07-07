@@ -5,6 +5,8 @@
 #include "geometry/vector.h"
 #include "date/date.h"
 
+using namespace asf::geometry;
+
 TEST(EcefTests, Construction)
 {
   EXPECT_NO_THROW(ECEF(nullptr, std::chrono::system_clock::now()););

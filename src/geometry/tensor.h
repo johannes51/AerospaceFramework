@@ -5,6 +5,9 @@
 #include "frame/frame.h"
 #include "util/definitions.h"
 
+namespace asf {
+namespace geometry {
+
 class Tensor {
 public:
   Tensor(const Frame* frame, Eigen::Matrix3d matrix = Eigen::Matrix3d());
@@ -28,3 +31,6 @@ protected:
   const Frame* frame_;
   Eigen::Matrix3d matrix_;
 };
+
+} // namespace geometry
+} // namespace asf

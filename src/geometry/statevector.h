@@ -2,6 +2,9 @@
 
 #include "util/definitions.h"
 
+namespace asf {
+namespace geometry {
+
 class Frame;
 
 class StateVector {
@@ -30,3 +33,6 @@ protected:
   TensorSP angularVelocity_;
   TensorSP angularAcceleration_;
 };
+
+} // namespace geometry
+} // namespace asf

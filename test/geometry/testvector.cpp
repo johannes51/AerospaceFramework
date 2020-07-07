@@ -7,6 +7,8 @@
 #include "geometry/frame/wgs84.h"
 #include "geometry/vector.h"
 
+using namespace asf::geometry;
+
 TEST(VectorTests, Construction)
 {
   EXPECT_NO_THROW(Vector(new ECI((Frame*)1)));

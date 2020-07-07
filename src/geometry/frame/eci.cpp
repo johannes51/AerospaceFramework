@@ -2,6 +2,8 @@
 
 #include "../vector.h"
 
+using namespace asf::geometry;
+
 ECI::ECI(const Frame* parent)
     : FrameImpl(parent)
 {

@@ -3,6 +3,8 @@
 #include "../vector.h"
 #include "ecef.h"
 
+using namespace asf::geometry;
+
 constexpr double a = 6378137.0;
 constexpr double f = 1 / 298.257223563;
 constexpr double b = a * (1. - f);

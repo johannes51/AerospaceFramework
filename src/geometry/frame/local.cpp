@@ -3,6 +3,8 @@
 #include "../tensor.h"
 #include "../vector.h"
 
+using namespace asf::geometry;
+
 Local::Local()
     : FrameImpl(nullptr)
 {

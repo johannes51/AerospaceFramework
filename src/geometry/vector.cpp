@@ -1,5 +1,7 @@
 #include "vector.h"
 
+using namespace asf::geometry;
+
 Vector::Vector(const Frame* frame, TransformationBehaviour behavesAs)
     : frame_(std::move(frame))
     , behavesAs_(behavesAs)

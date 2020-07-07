@@ -2,10 +2,13 @@
 
 #include "frameimpl.h"
 
+namespace asf {
+namespace geometry {
+
 class Local : public FrameImpl {
 public:
   Local();
-  DISABLE_COPY_AND_MOVE(Local)
+  ASF_DISABLE_COPY_AND_MOVE(Local)
 
   void attach(const Frame* value, VectorCSP offset, TensorCSP rotation);
 
@@ -20,3 +23,6 @@ private:
   VectorCSP offset_;
   TensorCSP rotation_;
 };
+
+} // namespace geometry
+} // namespace asf

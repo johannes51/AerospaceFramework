@@ -2,9 +2,12 @@
 
 #include "frame.h"
 
+namespace asf {
+namespace geometry {
+
 class FrameImpl : public Frame {
 public:
-  DISABLE_COPY_AND_MOVE(FrameImpl)
+  ASF_DISABLE_COPY_AND_MOVE(FrameImpl)
 
   virtual Vector to(const Vector& from) const override;
   virtual Vector to(const Vector& from, FrameType toType) const override;
@@ -26,3 +29,6 @@ private:
   virtual Vector unwind(const Vector& from) const = 0;
   virtual Vector embed(const Vector& from) const = 0;
 };
+
+} // namespace geometry
+} // namespace asf

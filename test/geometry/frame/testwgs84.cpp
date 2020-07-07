@@ -6,6 +6,8 @@
 
 #include "date/date.h"
 
+using namespace asf::geometry;
+
 TEST(Wgs84Tests, Construction)
 {
   EXPECT_NO_THROW(Wgs84(nullptr, std::chrono::system_clock::now()););

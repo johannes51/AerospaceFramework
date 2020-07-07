@@ -4,6 +4,8 @@
 #include "../transformations.h"
 #include "../vector.h"
 
+using namespace asf::geometry;
+
 VehicleFrame::VehicleFrame()
     : FrameImpl(nullptr)
 {

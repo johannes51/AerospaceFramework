@@ -6,6 +6,8 @@
 #include "../vector.h"
 #include "../tensor.h"
 
+using namespace asf::geometry;
+
 ECEF::ECEF(const Frame* parent, std::chrono::system_clock::time_point time)
     : FrameImpl(parent)
     , time_(time)

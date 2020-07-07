@@ -2,6 +2,8 @@
 
 #include "../vector.h"
 
+using namespace asf::geometry;
+
 FrameImpl::FrameImpl(const Frame* parent)
     : parent_(parent)
 {

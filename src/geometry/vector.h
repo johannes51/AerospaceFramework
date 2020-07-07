@@ -4,6 +4,9 @@
 
 #include "frame/frame.h"
 
+namespace asf {
+namespace geometry {
+
 enum class TransformationBehaviour {
   Vector,
   Position,
@@ -42,3 +45,6 @@ protected:
   TransformationBehaviour behavesAs_;
   Eigen::Vector3d vector_;
 };
+
+} // namespace geometry
+} // namespace asf

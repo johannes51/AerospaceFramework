@@ -2,12 +2,15 @@
 
 #include "util/definitions.h"
 
+namespace asf {
+namespace geometry {
+
 enum class FrameType { ECI, LLA, Vehicle, Aerodynamic, Other };
 
 class Frame {
 public:
   virtual ~Frame() = default;
-  DISABLE_COPY_AND_MOVE(Frame)
+  ASF_DISABLE_COPY_AND_MOVE(Frame)
 
   virtual Vector to(const Vector& from) const = 0;
   virtual Vector to(const Vector& from, FrameType toType) const = 0;
@@ -28,3 +31,7 @@ protected:
 };
 
 using FrameSP = std::shared_ptr<Frame>;
+
+} // namespace geometry
+} // namespace asf
+

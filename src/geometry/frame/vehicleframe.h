@@ -2,6 +2,9 @@
 
 #include "frameimpl.h"
 
+namespace asf {
+namespace geometry {
+
 class VehicleFrame : public FrameImpl {
 public:
   VehicleFrame();
@@ -23,3 +26,6 @@ private:
   virtual Vector unwind(const Vector& from) const override;
   virtual Vector embed(const Vector& from) const override;
 };
+
+} // namespace geometry
+} // namespace asf

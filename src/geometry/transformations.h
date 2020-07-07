@@ -4,6 +4,9 @@
 
 #include "util/definitions.h"
 
+namespace asf {
+namespace geometry {
+
 /**
  * @brief rotate calculates the rotation matrix in 3 dimensions for a angle
  * about an arbitrary axis
@@ -43,3 +46,6 @@ Tensor rotateZ(double angle);
  * @return returns a transformation matrix
  */
 Tensor calculateEulerMatrixInverse(double theta, double psi);
+
+} // namespace geometry
+} // namespace asf
