@@ -3,7 +3,7 @@
 #include <Eigen/Core>
 
 #include "frame/frame.h"
-#include "util/definitions.h"
+#include "util/asf_definitions.h"
 
 namespace asf {
 namespace geometry {

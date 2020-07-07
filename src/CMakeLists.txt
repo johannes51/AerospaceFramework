@@ -36,7 +36,7 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/local.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/util/definitions.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/asf_definitions.h"
     ${SOFA_SRCS}
 )
 

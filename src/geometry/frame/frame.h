@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/definitions.h"
+#include "util/asf_definitions.h"
 
 namespace asf {
 namespace geometry {
