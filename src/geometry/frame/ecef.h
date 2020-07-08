@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ECEF_H
+#define ECEF_H
 
 #include <chrono>
 
@@ -26,3 +27,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // ECEF_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FRAME_H
+#define FRAME_H
 
 #include "util/asf_definitions.h"
 
@@ -35,3 +36,4 @@ using FrameSP = std::shared_ptr<Frame>;
 } // namespace geometry
 } // namespace asf
 
+#endif // FRAME_H

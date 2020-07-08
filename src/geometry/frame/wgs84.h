@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WGS84_H
+#define WGS84_H
 
 #include <chrono>
 
@@ -25,3 +26,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // WGS84_H

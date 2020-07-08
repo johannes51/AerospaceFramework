@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRANSFORMATIONS_H
+#define TRANSFORMATIONS_H
 
 #include <stdexcept>
 
@@ -49,3 +50,5 @@ Tensor calculateEulerMatrixInverse(double theta, double psi);
 
 } // namespace geometry
 } // namespace asf
+
+#endif // TRANSFORMATIONS_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VEHICLEFRAME_H
+#define VEHICLEFRAME_H
 
 #include "frameimpl.h"
 
@@ -29,3 +30,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // VEHICLEFRAME_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <Eigen/Core>
 
@@ -48,3 +49,5 @@ protected:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // VECTOR_H

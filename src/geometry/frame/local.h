@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LOCAL_H
+#define LOCAL_H
 
 #include "frameimpl.h"
 
@@ -26,3 +27,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // LOCAL_H

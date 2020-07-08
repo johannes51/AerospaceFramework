@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ASF_DEFINITIONS_H
+#define ASF_DEFINITIONS_H
 
 #include <memory>
 
@@ -31,3 +32,5 @@ namespace geometry {
   ClassName& operator=(const ClassName&) = delete;                                                                     \
   ClassName(ClassName&&) = delete;                                                                                     \
   ClassName& operator=(ClassName&&) = delete;
+
+#endif // ASF_DEFINITIONS_H

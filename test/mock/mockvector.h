@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MOCKVECTOR_H
+#define MOCKVECTOR_H
 
 #include "geometry/frame/eci.h"
 #include "geometry/vector.h"
@@ -14,3 +15,5 @@ public:
   virtual Vector to(asf::geometry::FrameType type) const override { return *this; }
   virtual Vector to(const asf::geometry::Frame* frame) const override { return *this; }
 };
+
+#endif // MOCKVECTOR_H

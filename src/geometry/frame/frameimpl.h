@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FRAMEIMPL_H
+#define FRAMEIMPL_H
 
 #include "frame.h"
 
@@ -32,3 +33,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // FRAMEIMPL_H

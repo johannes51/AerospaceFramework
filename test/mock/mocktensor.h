@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MOCKTENSOR_H
+#define MOCKTENSOR_H
 
 #include "geometry/tensor.h"
 
@@ -11,3 +12,5 @@ public:
   {
   }
 };
+
+#endif // MOCKTENSOR_H

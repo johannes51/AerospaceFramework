@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TENSOR_H
+#define TENSOR_H
 
 #include <Eigen/Core>
 
@@ -34,3 +35,5 @@ protected:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // TENSOR_H

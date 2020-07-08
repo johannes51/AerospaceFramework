@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STATEVECTOR_H
+#define STATEVECTOR_H
 
 #include "util/asf_definitions.h"
 
@@ -36,3 +37,5 @@ protected:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // STATEVECTOR_H

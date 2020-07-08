@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MOCKSTATEVECTOR_H
+#define MOCKSTATEVECTOR_H
 
 #include "mock/mocktensor.h"
 #include "mock/mockvector.h"
@@ -18,3 +19,5 @@ public:
     angularAcceleration_ = std::make_shared<MockTensor>();
   }
 };
+
+#endif // MOCKSTATEVECTOR_H

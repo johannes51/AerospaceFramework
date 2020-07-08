@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ECI_H
+#define ECI_H
 
 #include "frameimpl.h"
 
@@ -22,3 +23,5 @@ private:
 
 } // namespace geometry
 } // namespace asf
+
+#endif // ECI_H
