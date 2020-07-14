@@ -1,15 +1,18 @@
 #include <gtest/gtest.h>
 
+#include "date/date.h"
+
 #include "geometry/frame/ecef.h"
 #include "geometry/frame/eci.h"
 #include "geometry/vector.h"
-#include "date/date.h"
+#include "time/utc.h"
 
+using namespace asf;
 using namespace asf::geometry;
 
 TEST(EcefTests, Construction)
 {
-  EXPECT_NO_THROW(ECEF(nullptr, std::chrono::system_clock::now()););
+  EXPECT_NO_THROW(ECEF(nullptr, time::UTC(std::chrono::system_clock::now())));
 }
 
 TEST(EcefTests, Embed)
@@ -17,7 +20,7 @@ TEST(EcefTests, Embed)
   using namespace date;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto ecef = std::make_shared<ECEF>(eci.get(), sys_days{January/9/2014} + 2h + 35min + 34s);
+  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC(sys_days{January/9/2014} + 2h + 35min + 34s));
   auto vecEci = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEci->element(0) = 1;
   vecEci->element(1) = 1;
@@ -33,7 +36,7 @@ TEST(EcefTests, Unwind)
   using namespace date;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto ecef = std::make_shared<ECEF>(eci.get(), sys_days{January/9/2014} + 2h + 35min + 34s);
+  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC(sys_days{January/9/2014} + 2h + 35min + 34s));
   auto vecEcef = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEcef->element(0) = 1;
   vecEcef->element(1) = 1;

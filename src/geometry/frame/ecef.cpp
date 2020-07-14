@@ -1,38 +1,29 @@
 #include "ecef.h"
 
-#include "date/date.h"
-#include "util/sofa/sofa.h"
-
 #include "../vector.h"
 #include "../tensor.h"
+#include "time/conversions.h"
+#include "time/tai.h"
+#include "time/tt.h"
+#include "time/ut1.h"
+#include "time/utc.h"
+#include "util/sofa/sofa.h"
+#include "util/sofa_helper.h"
 
 using namespace asf::geometry;
 
-ECEF::ECEF(const Frame* parent, std::chrono::system_clock::time_point time)
+ECEF::ECEF(const Frame* parent, const time::Time& time)
     : FrameImpl(parent)
-    , time_(time)
     , rotationIn_()
     , rotationOut_()
 {
-  auto dayNumber = date::floor<date::days>(time_);
-  auto hours = date::floor<std::chrono::hours>(time_ - dayNumber);
-  auto minutes = date::floor<std::chrono::minutes>(time_ - dayNumber - hours);
-  std::chrono::duration<double, std::chrono::seconds::period> seconds =
-      date::floor<std::chrono::seconds>(time_ - dayNumber - hours - minutes);
-  auto date = date::year_month_day(dayNumber);
-  double jdUtc1, jdUtc2;
-  iauDtf2d("UTC", int(date.year()), unsigned(date.month()), unsigned(date.day()),
-           hours.count(), minutes.count(), seconds.count(), &jdUtc1, &jdUtc2);
-  double jdUt1_1, jdUt1_2;
-  iauUtcut1(jdUtc1, jdUtc2, 0., &jdUt1_1, &jdUt1_2);
-  double jdTai1, jdTai2;
-  iauUt1tai(jdUt1_1, jdUt1_2, 0., &jdTai1, &jdTai2);
-  double jdTt1, jdTt2;
-  iauUt1tt(jdUt1_1, jdUt1_2, 0., &jdTt1, &jdTt2);
+  const auto jdTai = util::convertSofaJd(time::convert<time::TAI>(time));
+  const auto jdTt = util::convertSofaJd(time::convert<time::TT>(time));
+  const auto jdUt1 = util::convertSofaJd(time::convert<time::UT1>(time));
   double x,y;
-  iauXy06(jdTt1, jdTt2, &x, &y);
+  iauXy06(jdTt.first, jdTt.second, &x, &y);
   double rc2t[3][3], rtc2[3][3];
-  iauC2t06a(jdTai1, jdTai2, jdUt1_1, jdUt1_2, x, y, rc2t);
+  iauC2t06a(jdTai.first, jdTai.second, jdUt1.first, jdUt1.second, x, y, rc2t);
   iauTr(rc2t, rtc2);
   auto rotationIn = std::make_shared<Tensor>(parent_);
   auto rotationOut = std::make_shared<Tensor>(this);
@@ -48,7 +39,8 @@ ECEF::ECEF(const Frame* parent, std::chrono::system_clock::time_point time)
 
 bool ECEF::equals(const Frame& other) const
 {
-  return time_ == static_cast<const ECEF&>(other).time_;
+  const auto& otherEcef = static_cast<const ECEF&>(other);
+  return rotationIn_ == otherEcef.rotationIn_ && rotationOut_ == otherEcef.rotationOut_;
 }
 
 Vector ECEF::unwind(const Vector& from) const

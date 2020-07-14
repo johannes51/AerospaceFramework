@@ -15,6 +15,23 @@ include(cpp-standards)
 add_subdirectory(util/sofa)
 
 set(LIB_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/calendartime.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketime.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/time.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/ut1.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/ut1.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/utc.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/utc.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/statevector.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/statevector.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/tensor.h"
@@ -37,6 +54,8 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/asf_definitions.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.cpp"
     ${SOFA_SRCS}
 )
 

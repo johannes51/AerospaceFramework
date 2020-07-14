@@ -3,14 +3,16 @@
 #include "geometry/frame/wgs84.h"
 #include "geometry/frame/eci.h"
 #include "geometry/vector.h"
+#include "time/utc.h"
 
 #include "date/date.h"
 
+using namespace asf;
 using namespace asf::geometry;
 
 TEST(Wgs84Tests, Construction)
 {
-  EXPECT_NO_THROW(Wgs84(nullptr, std::chrono::system_clock::now()););
+  EXPECT_NO_THROW(Wgs84(nullptr, time::UTC(std::chrono::system_clock::now())));
 }
 
 TEST(Wgs84Tests, Unwind)
@@ -18,7 +20,7 @@ TEST(Wgs84Tests, Unwind)
   using namespace date;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto wgs = std::make_shared<Wgs84>(eci.get(), sys_days{January/9/2014} + 2h + 35min + 34s);
+  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(sys_days{January/9/2014} + 2h + 35min + 34s));
   auto vecWgs = std::make_shared<Vector>(wgs.get(), TransformationBehaviour::Position);
   vecWgs->element(0) = 40;
   vecWgs->element(1) = 40;
@@ -34,7 +36,7 @@ TEST(Wgs84Tests, Embed)
   using namespace date;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto wgs = std::make_shared<Wgs84>(eci.get(), sys_days{January/9/2014} + 2h + 35min + 34s);
+  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(sys_days{January/9/2014} + 2h + 35min + 34s));
   auto vecEci = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEci->element(0) = 4e6;
   vecEci->element(1) = 4e6;

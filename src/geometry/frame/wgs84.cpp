@@ -10,7 +10,7 @@ constexpr double f = 1 / 298.257223563;
 constexpr double b = a * (1. - f);
 constexpr double eSq = f * (2. - f);
 
-Wgs84::Wgs84(Frame* parent, std::chrono::system_clock::time_point&& time)
+Wgs84::Wgs84(Frame* parent, const time::Time& time)
     : FrameImpl(parent)
     , ecef_(std::make_shared<ECEF>(parent, std::move(time)))
 {

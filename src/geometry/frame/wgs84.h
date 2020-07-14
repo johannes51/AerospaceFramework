@@ -1,16 +1,15 @@
 #ifndef WGS84_H
 #define WGS84_H
 
-#include <chrono>
-
 #include "frameimpl.h"
+#include "time/time.h"
 
 namespace asf {
 namespace geometry {
 
 class Wgs84 : public FrameImpl {
 public:
-  Wgs84(Frame* parent, std::chrono::system_clock::time_point&& time);
+  Wgs84(Frame* parent, const asf::time::Time& time);
   ASF_DISABLE_COPY_AND_MOVE(Wgs84)
 
 protected:
