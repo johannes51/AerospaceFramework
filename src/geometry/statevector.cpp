@@ -14,9 +14,6 @@ StateVector::StateVector(const Frame* frame)
     , angularVelocity_(std::make_shared<Tensor>(frame))
     , angularAcceleration_(std::make_shared<Tensor>(frame))
 {
-  if (!frame) {
-    throw false;
-  }
 }
 
 Vector& StateVector::position()

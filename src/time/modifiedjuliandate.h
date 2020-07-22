@@ -1,27 +1,51 @@
 #ifndef MODIFIEDJULIANDATE_H
 #define MODIFIEDJULIANDATE_H
 
-#include "julianliketime.h"
+#include "scaledjulianlike.h"
 #include "classicaljuliandate.h"
 
 namespace asf {
 namespace time {
 
-class ModifiedJulianDate : public JulianLikeTime
+template<typename Scale>
+class ModifiedJulianDate : public ScaledJulianLike<Scale>
 {
 public:
-  ModifiedJulianDate() = delete;
-  ModifiedJulianDate(std::unique_ptr<CalendarTime> scale);
   virtual ~ModifiedJulianDate() = default;
 
   virtual double dayFraction() const override;
+  virtual int dayNumber() const override;
 
   static constexpr long DayOffset = 2400000;
   static constexpr double FractionOffset = 0.5;
 
-  virtual std::unique_ptr<CalendarTime> toCal() const override;
-  virtual ClassicalJulianDate toClassical() const override;
+  virtual ClassicalJulianDate<Scale> toClassical() const override;
+  virtual Scale toCalendar() const override;
 };
+
+template<typename Scale>
+int ModifiedJulianDate<Scale>::dayNumber() const
+{
+  return 0;
+}
+
+template<typename Scale>
+double ModifiedJulianDate<Scale>::dayFraction() const
+{
+  return 0;
+}
+
+template<typename Scale>
+ClassicalJulianDate<Scale> ModifiedJulianDate<Scale>::toClassical() const
+{
+  return ClassicalJulianDate<Scale>();
+}
+
+template<typename Scale>
+Scale ModifiedJulianDate<Scale>::toCalendar() const
+{
+  return toClassical().toCalendar();
+}
 
 } // namespace time
 } // namespace asf

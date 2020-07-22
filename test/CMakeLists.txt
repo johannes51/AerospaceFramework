@@ -31,7 +31,7 @@ target_include_directories(AerospaceFramework_test PRIVATE ${CMAKE_CURRENT_SOURC
 gtest_add_tests(TARGET AerospaceFramework_test)
 add_dependencies(tests AerospaceFramework_test)
 
-cxx_14(AerospaceFramework_test)
+cxx_17(AerospaceFramework_test)
 enable_wall(AerospaceFramework_test)
 clang_format(format_AerospaceFramework_test AerospaceFramework_test)
 clang_tidy(AerospaceFramework_test "-checks=${CLANG_TIDY_STD_FLAGS},${TEST_TIDY_FLAGS}")

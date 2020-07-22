@@ -6,9 +6,6 @@ Vector::Vector(const Frame* frame, TransformationBehaviour behavesAs)
     : frame_(std::move(frame))
     , behavesAs_(behavesAs)
 {
-  if (!frame_) {
-    throw false;
-  }
 }
 
 Vector::Vector(const Frame* frame, Eigen::Vector3d eVector, TransformationBehaviour behavesAs)

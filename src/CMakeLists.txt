@@ -17,15 +17,15 @@ add_subdirectory(util/sofa)
 set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/time/calendartime.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_internals.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_internals.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketime.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/time.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/scaledjulianlike.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/time.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/ut1.h"
@@ -64,3 +64,4 @@ find_package(Eigen3 3.3.1 REQUIRED)
 add_library(AerospaceFramework_lib ${LIB_SOURCES})
 target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(AerospaceFramework_lib PUBLIC date Eigen3::Eigen)
+cxx_17(AerospaceFramework_lib)
