@@ -10,8 +10,7 @@ class TAI : public CalendarTime
 {
 public:
   TAI();
-
-  virtual int year() override;
+  explicit TAI(const TimePoint& timePoint);
 };
 
 } // namespace time

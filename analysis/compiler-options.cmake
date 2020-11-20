@@ -16,7 +16,7 @@ endfunction()
 function(enable_wnone TARGET)
   if("${CMAKE_C_COMPILER_ID}" MATCHES "GNU")
     # GCC
-    target_compile_options(${TARGET} PRIVATE "-Wall" "-Wextra" "-pedantic")
+    target_compile_options(${TARGET} PRIVATE "-w")
   elseif("${CMAKE_C_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang"
          OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
     # Clang

@@ -6,8 +6,8 @@ TT::TT()
 {
 }
 
-
-int asf::time::TT::year()
+TT::TT(const TimePoint& timePoint)
+  : CalendarTime(timePoint)
 {
-  return 0;
 }
+

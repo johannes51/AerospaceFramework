@@ -128,6 +128,12 @@ UT1 convertInternal<UT1, UTC>(const UTC& from);
 template<>
 UTC convertInternal<UTC, UT1>(const UT1& from);
 
+template<>
+UTC convertInternal<UTC, TAI>(const TAI& from);
+
+template<>
+UTC convertInternal<UTC, TT>(const TT& from);
+
 } // namespace internal
 } // namespace time
 } // namespace asf

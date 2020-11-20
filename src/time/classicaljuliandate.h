@@ -47,7 +47,7 @@ ClassicalJulianDate<Scale> ClassicalJulianDate<Scale>::toClassical() const
 template<typename Scale>
 Scale ClassicalJulianDate<Scale>::toCalendar() const
 {
-  return Scale();
+  return Scale(); // TODO: implement
 }
 
 } // namespace time

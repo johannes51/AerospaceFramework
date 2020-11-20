@@ -10,8 +10,7 @@ class UT1 : public CalendarTime
 {
 public:
   UT1();
-
-  virtual int year() override;
+  explicit UT1(const TimePoint& timePoint);
 };
 
 } // namespace time

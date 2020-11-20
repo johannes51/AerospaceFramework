@@ -2,10 +2,6 @@ find_package(GTest REQUIRED)
 include(GoogleTest)
 
 add_custom_target(tests)
-include_directories(
-    ${GTEST_INCLUDE_DIRS}
-    ${GMOCK_INCLUDE_DIRS}
-)
 
 enable_testing()
 
@@ -21,12 +17,19 @@ set(TEST_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testtensor.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testwgs84.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testecef.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/time/testtai.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/time/testtt.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/time/testut1.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/time/testutc.cpp"
 )
 
 add_executable(AerospaceFramework_test ${TEST_SRCS})
 
 target_link_libraries(AerospaceFramework_test PRIVATE AerospaceFramework_lib gtest gtest_main pthread)
 target_include_directories(AerospaceFramework_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(AerospaceFramework_test SYSTEM PRIVATE
+    ${GTEST_INCLUDE_DIRS}
+    ${GMOCK_INCLUDE_DIRS})
 
 gtest_add_tests(TARGET AerospaceFramework_test)
 add_dependencies(tests AerospaceFramework_test)

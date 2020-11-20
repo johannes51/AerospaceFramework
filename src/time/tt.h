@@ -10,8 +10,7 @@ class TT : public CalendarTime
 {
 public:
   TT();
-
-  virtual int year() override;
+  explicit TT(const TimePoint& timePoint);
 };
 
 } // namespace time

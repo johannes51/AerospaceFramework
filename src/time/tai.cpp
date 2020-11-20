@@ -4,7 +4,8 @@ asf::time::TAI::TAI()
 {
 }
 
-int asf::time::TAI::year()
+asf::time::TAI::TAI(const asf::time::TimePoint& timePoint)
+  : CalendarTime(timePoint)
 {
-  return 0;
 }
+

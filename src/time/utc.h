@@ -11,10 +11,9 @@ namespace time {
 class UTC : public CalendarTime
 {
 public:
-  UTC();
+  UTC() = default;
   explicit UTC(const std::chrono::system_clock::time_point& utc);
-
-  virtual int year() override;
+  explicit UTC(const TimePoint& timePoint);
 };
 
 } // namespace time

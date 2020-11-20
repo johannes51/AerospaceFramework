@@ -61,3 +61,15 @@ UTC internal::convertInternal<UTC, UT1>(const UT1& from)
 {
   return UTC();
 }
+
+template<>
+UTC internal::convertInternal<UTC, TAI>(const TAI& from)
+{
+  return UTC();
+}
+
+template<>
+UTC internal::convertInternal<UTC, TT>(const TT& from)
+{
+  return UTC();
+}

@@ -4,7 +4,8 @@ asf::time::UT1::UT1()
 {
 }
 
-int asf::time::UT1::year()
+asf::time::UT1::UT1(const asf::time::TimePoint& timePoint)
+  : CalendarTime(timePoint)
 {
-  return 0;
 }
+
