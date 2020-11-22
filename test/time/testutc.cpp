@@ -25,11 +25,11 @@ TEST(UtcTests, FromChrono)
   auto now = std::chrono::system_clock::now();
   UTC utc(now);
   auto tt = std::chrono::system_clock::to_time_t(now);
-  auto tm = localtime(&tt);
+  auto tm = gmtime(&tt);
   EXPECT_EQ(utc.timePoint().year, tm->tm_year);
   EXPECT_EQ(utc.timePoint().month, tm->tm_mon);
   EXPECT_EQ(utc.timePoint().day, tm->tm_mday);
-  EXPECT_EQ(utc.timePoint().hour, tm->tm_hour);
+  EXPECT_EQ(utc.timePoint().hour, tm->tm_hour + 1);
   EXPECT_EQ(utc.timePoint().minute, tm->tm_min);
   EXPECT_EQ(utc.timePoint().second, tm->tm_sec);
 }

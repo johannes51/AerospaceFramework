@@ -17,7 +17,7 @@ TEST(EcefTests, Embed)
 {
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC(/*sys_days{January/9/2014} + 2h + 35min + 34s*/));
+  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC({2014, 1, 9, 2, 35, 34.}));
   auto vecEci = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEci->element(0) = 1;
   vecEci->element(1) = 1;
@@ -32,7 +32,7 @@ TEST(EcefTests, Unwind)
 {
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC(/*sys_days{January/9/2014} + 2h + 35min + 34s*/));
+  auto ecef = std::make_shared<ECEF>(eci.get(), time::UTC({2014, 1, 9, 2, 35, 34.}));
   auto vecEcef = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEcef->element(0) = 1;
   vecEcef->element(1) = 1;

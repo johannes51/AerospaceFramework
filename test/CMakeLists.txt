@@ -17,6 +17,7 @@ set(TEST_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testtensor.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testwgs84.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testecef.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testvehicleframe.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/time/testtai.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/time/testtt.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/time/testut1.cpp"
