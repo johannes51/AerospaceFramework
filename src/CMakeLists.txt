@@ -67,3 +67,14 @@ target_link_libraries(AerospaceFramework_lib PUBLIC date Eigen3::Eigen)
 get_target_property(date_include_dirs date INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(AerospaceFramework_lib SYSTEM PRIVATE ${date_include_dirs})
 cxx_17(AerospaceFramework_lib)
+
+configure_file(
+  "${CMAKE_CURRENT_LIST_DIR}/../data/dut1.csv"
+  "${CMAKE_CURRENT_BINARY_DIR}/data/dut1.csv"
+  COPYONLY)
+
+configure_file(
+  "${CMAKE_CURRENT_LIST_DIR}/../data/leap_seconds.csv"
+  "${CMAKE_CURRENT_BINARY_DIR}/data/leap_seconds.csv"
+  COPYONLY)
+
