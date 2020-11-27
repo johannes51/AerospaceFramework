@@ -63,9 +63,8 @@ find_package(Eigen3 3.3.1 REQUIRED)
 
 add_library(AerospaceFramework_lib ${LIB_SOURCES})
 target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(AerospaceFramework_lib PUBLIC date Eigen3::Eigen)
-get_target_property(date_include_dirs date INTERFACE_INCLUDE_DIRECTORIES)
-target_include_directories(AerospaceFramework_lib SYSTEM PRIVATE ${date_include_dirs})
+target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen)
+
 cxx_17(AerospaceFramework_lib)
 
 configure_file(
