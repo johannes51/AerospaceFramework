@@ -17,7 +17,7 @@ TEST(UtcTests, Construction2)
 
 TEST(UtcTests, Construction3)
 {
-  EXPECT_NO_THROW(UTC utc({2020, 12, 15, 16, 35, 34.}););
+  EXPECT_NO_THROW(UTC utc({ 2020, 12, 15, 16, 35, 34. }););
 }
 
 TEST(UtcTests, FromChrono)
@@ -36,7 +36,7 @@ TEST(UtcTests, FromChrono)
 
 TEST(UtcTests, FromTimePoint)
 {
-  UTC utc({2020, 12, 15, 16, 35, 34.});
+  UTC utc({ 2020, 12, 15, 16, 35, 34. });
   EXPECT_EQ(utc.timePoint().year, 2020);
   EXPECT_EQ(utc.timePoint().month, 12);
   EXPECT_EQ(utc.timePoint().day, 15);

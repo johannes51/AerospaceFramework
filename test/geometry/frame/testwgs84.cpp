@@ -25,7 +25,7 @@ TEST(Wgs84Tests, Unwind)
   auto vecEci = wgs->to(*vecWgs, FrameType::ECI);
   EXPECT_NEAR(vecEci.element(0), -4.2848e6, 0.01e6);
   EXPECT_NEAR(vecEci.element(1), -2.3515e6, 0.01e6);
-  EXPECT_NEAR(vecEci.element(2),  4.0840e6, 0.01e6);
+  EXPECT_NEAR(vecEci.element(2), 4.0840e6, 0.01e6);
 }
 
 TEST(Wgs84Tests, Embed)
@@ -38,8 +38,7 @@ TEST(Wgs84Tests, Embed)
   vecEci->element(1) = 4e6;
   vecEci->element(2) = 3e6;
   auto vecWgs = wgs->to(*vecEci, FrameType::LLA);
-  EXPECT_NEAR(vecWgs.element(0),  28.1517, 0.01);
+  EXPECT_NEAR(vecWgs.element(0), 28.1517, 0.01);
   EXPECT_NEAR(vecWgs.element(1), -102.2414, 0.01);
-  EXPECT_NEAR(vecWgs.element(2),  29716.645, 0.01);
+  EXPECT_NEAR(vecWgs.element(2), 29716.645, 0.01);
 }
-

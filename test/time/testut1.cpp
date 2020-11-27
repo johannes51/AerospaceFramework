@@ -13,7 +13,7 @@ TEST(Ut1Tests, Construction)
 
 TEST(Ut1Tests, Conversion1)
 {
-  UTC utc({2014, 1, 9, 20, 35, 34.});
+  UTC utc({ 2014, 1, 9, 20, 35, 34. });
   auto ut1Tp = convert<UT1>(utc).timePoint();
   EXPECT_EQ(ut1Tp.year, 2014);
   EXPECT_EQ(ut1Tp.month, 1);
@@ -25,7 +25,7 @@ TEST(Ut1Tests, Conversion1)
 
 TEST(Ut1Tests, Conversion2)
 {
-  UT1 ut1({2014, 1, 9, 20, 35, 34.1071961});
+  UT1 ut1({ 2014, 1, 9, 20, 35, 34.1071961 });
   auto utcTp = convert<UTC>(ut1).timePoint();
   EXPECT_EQ(utcTp.year, 2014);
   EXPECT_EQ(utcTp.month, 1);
@@ -37,7 +37,7 @@ TEST(Ut1Tests, Conversion2)
 
 TEST(Ut1Tests, Conversion3)
 {
-  UTC utc({2020, 12, 15, 16, 35, 34.});
+  UTC utc({ 2020, 12, 15, 16, 35, 34. });
   auto ut1Tp = convert<UT1>(utc).timePoint();
   EXPECT_EQ(ut1Tp.year, 2020);
   EXPECT_EQ(ut1Tp.month, 12);
@@ -49,7 +49,7 @@ TEST(Ut1Tests, Conversion3)
 
 TEST(Ut1Tests, Conversion4)
 {
-  UT1 ut1({2020, 12, 15, 16, 35, 34.9});
+  UT1 ut1({ 2020, 12, 15, 16, 35, 34.9 });
   auto utcTp = convert<UTC>(ut1).timePoint();
   EXPECT_EQ(utcTp.year, 2020);
   EXPECT_EQ(utcTp.month, 12);
@@ -58,4 +58,3 @@ TEST(Ut1Tests, Conversion4)
   EXPECT_EQ(utcTp.minute, 35);
   EXPECT_EQ(utcTp.second, 34.);
 }
-

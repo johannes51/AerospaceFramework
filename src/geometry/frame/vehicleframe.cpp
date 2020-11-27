@@ -45,7 +45,7 @@ void a_g::VehicleFrame::attach(const Frame* parent)
 
 bool a_g::VehicleFrame::equals(const Frame& other) const
 {
-  (void) other;
+  (void)other;
   return true; // WARNING: fix!
 }
 

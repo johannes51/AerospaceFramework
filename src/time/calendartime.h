@@ -22,9 +22,13 @@ public:
   virtual ~CalendarTime() = default;
 
   const TimePoint& timePoint() { return timePoint_; }
+
 protected:
   CalendarTime() = default;
-  CalendarTime(const TimePoint& timePoint) : timePoint_(timePoint) {}
+  CalendarTime(const TimePoint& timePoint)
+      : timePoint_(timePoint)
+  {
+  }
 
   TimePoint timePoint_;
 };
