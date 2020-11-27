@@ -3,33 +3,33 @@
 #include "../vector.h"
 #include "ecef.h"
 
-using namespace asf::geometry;
+namespace a_g = asf::geometry;
 
 constexpr double a = 6378137.0;
 constexpr double f = 1 / 298.257223563;
 constexpr double b = a * (1. - f);
 constexpr double eSq = f * (2. - f);
 
-Wgs84::Wgs84(Frame* parent, const time::Time& time)
+a_g::Wgs84::Wgs84(Frame* parent, const time::Time& time)
     : FrameImpl(parent)
-    , ecef_(std::make_shared<ECEF>(parent, std::move(time)))
+    , ecef_(std::make_shared<ECEF>(parent, time))
 {
 }
 
-bool Wgs84::equals(const Frame& other) const
+bool a_g::Wgs84::equals(const Frame& other) const
 {
   return *parent() == *other.parent();
 }
 
-Vector Wgs84::unwind(const Vector& from) const
+a_g::Vector a_g::Wgs84::unwind(const Vector& from) const
 {
   if (from.behavesAs() != TransformationBehaviour::Position) {
-    throw false;
+    throw std::invalid_argument("Can only represent positions in WGS-84");
   }
   auto result = Vector(ecef_.get(), TransformationBehaviour::Position);
-  const auto& lat = from.element(0) * M_PI / 180.;
-  const auto& lon = from.element(1) * M_PI / 180.;
-  const auto& h = from.element(2) * M_PI / 180.;
+  const auto& lat = from.element(0);
+  const auto& lon = from.element(1);
+  const auto& h = from.element(2);
 
   const double N = a / sqrt(1 - eSq * pow(sin(lon), 2));
   result.element(0) = (N + h) * cos(lat) * cos(lon);
@@ -39,10 +39,10 @@ Vector Wgs84::unwind(const Vector& from) const
   return ecef_->to(result, parent_);
 }
 
-Vector Wgs84::embed(const Vector& from) const
+a_g::Vector a_g::Wgs84::embed(const Vector& from) const
 {
   if (from.behavesAs() != TransformationBehaviour::Position) {
-    throw false;
+    throw std::invalid_argument("Can only represent positions in WGS-84");
   }
   auto result = Vector(this, TransformationBehaviour::Position);
   const auto ecef = from.to(ecef_.get());
@@ -55,7 +55,7 @@ Vector Wgs84::embed(const Vector& from) const
   const auto F = 54. * b * b * zE * zE;
   const auto G = p * p + (1 - eSq) * zE * zE - eSq * ESq;
   const auto c = (eSq * eSq * F * p * p) / (pow(G, 3.));
-  const auto s = pow(1 + c + sqrt(c * c + 2 * c), 1. / 3.);
+  const auto s = pow(1 + c + sqrt(c * c + 2. * c), 1. / 3.);
   const auto P = F / (2. * pow(s + 4. / 3., 2.) * G * G);
   const auto Q = sqrt(1. + 2. * eSq * eSq * P);
   const auto r0 = sqrt(a * a / 2. * (1. + 1. / Q) - (P * (1. - eSq) * zE) / (Q * (1. + Q)) - P * p * p / 2.)

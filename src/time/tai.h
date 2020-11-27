@@ -6,10 +6,9 @@
 namespace asf {
 namespace time {
 
-class TAI : public CalendarTime
-{
+class TAI : public CalendarTime {
 public:
-  TAI();
+  TAI() = default;
   explicit TAI(const TimePoint& timePoint);
 };
 

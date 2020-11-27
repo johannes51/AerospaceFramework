@@ -3,26 +3,27 @@
 #include "../tensor.h"
 #include "../vector.h"
 
-using namespace asf::geometry;
+namespace a_g = asf::geometry;
 
-Local::Local()
+a_g::Local::Local()
     : FrameImpl(nullptr)
 {
 }
 
-void Local::attach(const Frame* value, VectorCSP offset, TensorCSP rotation)
+void a_g::Local::attach(const Frame* value, VectorCSP offset, TensorCSP rotation)
 {
   parent_ = value;
   offset_ = std::move(offset);
   rotation_ = std::move(rotation);
 }
 
-bool Local::equals(const Frame& other) const
+bool a_g::Local::equals(const Frame& other) const
 {
-  return offset_ == static_cast<const Local&>(other).offset_ && rotation_ == static_cast<const Local&>(other).rotation_;
+  return offset_ == dynamic_cast<const Local&>(other).offset_
+      && rotation_ == dynamic_cast<const Local&>(other).rotation_;
 }
 
-Vector Local::unwind(const Vector& from) const
+a_g::Vector a_g::Local::unwind(const Vector& from) const
 {
   auto transformed = rotation_->eMatrix() * from.eVector();
   switch (from.behavesAs()) {
@@ -38,7 +39,7 @@ Vector Local::unwind(const Vector& from) const
   return from;
 }
 
-Vector Local::embed(const Vector& from) const
+a_g::Vector a_g::Local::embed(const Vector& from) const
 {
   auto transformed = rotation_->eMatrix().transpose() * from.eVector();
   switch (from.behavesAs()) {

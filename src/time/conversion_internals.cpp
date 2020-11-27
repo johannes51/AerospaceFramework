@@ -1,75 +1,76 @@
 #include "conversion_internals.h"
 
-using namespace asf::time;
+namespace a_t = asf::time;
+namespace a_t_int = a_t::internal;
 
-template<>
-TAI asf::time::internal::convertInternal<TAI, UTC>(const UTC& from)
+template <> a_t::TAI a_t_int::convertInternal<a_t::TAI, a_t::UTC>(const UTC& from)
 {
+  (void)from; // TODO: implement
   return TAI();
 }
 
-template<>
-TAI asf::time::internal::convertInternal<TAI, TT>(const TT& from)
+template <> a_t::TAI a_t_int::convertInternal<a_t::TAI, a_t::TT>(const TT& from)
 {
+  (void)from; // TODO: implement
   return TAI();
 }
 
-template<>
-TAI asf::time::internal::convertInternal<TAI, UT1>(const UT1& from)
+template <> a_t::TAI a_t_int::convertInternal<a_t::TAI, a_t::UT1>(const UT1& from)
 {
+  (void)from; // TODO: implement
   return TAI();
 }
 
-template<>
-TT asf::time::internal::convertInternal<TT, TAI>(const TAI& from)
+template <> a_t::TT a_t_int::convertInternal<a_t::TT, a_t::TAI>(const TAI& from)
 {
+  (void)from; // TODO: implement
   return TT();
 }
 
-template<>
-TT asf::time::internal::convertInternal<TT, UT1>(const UT1& from)
+template <> a_t::TT a_t_int::convertInternal<a_t::TT, a_t::UT1>(const UT1& from)
 {
+  (void)from; // TODO: implement
   return TT();
 }
 
-template<>
-TT asf::time::internal::convertInternal<TT, UTC>(const UTC& from)
+template <> a_t::TT a_t_int::convertInternal<a_t::TT, a_t::UTC>(const UTC& from)
 {
+  (void)from; // TODO: implement
   return TT();
 }
 
-template<>
-UT1 asf::time::internal::convertInternal<UT1, TAI>(const TAI& from)
+template <> a_t::UT1 a_t_int::convertInternal<a_t::UT1, a_t::TAI>(const TAI& from)
 {
+  (void)from; // TODO: implement
   return UT1();
 }
 
-template<>
-UT1 asf::time::internal::convertInternal<UT1, TT>(const TT& from)
+template <> a_t::UT1 a_t_int::convertInternal<a_t::UT1, a_t::TT>(const TT& from)
 {
+  (void)from; // TODO: implement
   return UT1();
 }
 
-template<>
-UT1 asf::time::internal::convertInternal<UT1, UTC>(const UTC& from)
+template <> a_t::UT1 a_t_int::convertInternal<a_t::UT1, a_t::UTC>(const UTC& from)
 {
+  (void)from; // TODO: implement
   return UT1();
 }
 
-template<>
-UTC internal::convertInternal<UTC, UT1>(const UT1& from)
+template <> a_t::UTC a_t_int::convertInternal<a_t::UTC, a_t::UT1>(const UT1& from)
 {
+  (void)from; // TODO: implement
   return UTC();
 }
 
-template<>
-UTC internal::convertInternal<UTC, TAI>(const TAI& from)
+template <> a_t::UTC a_t_int::convertInternal<a_t::UTC, a_t::TAI>(const TAI& from)
 {
+  (void)from; // TODO: implement
   return UTC();
 }
 
-template<>
-UTC internal::convertInternal<UTC, TT>(const TT& from)
+template <> a_t::UTC a_t_int::convertInternal<a_t::UTC, a_t::TT>(const TT& from)
 {
+  (void)from; // TODO: implement
   return UTC();
 }

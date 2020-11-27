@@ -4,56 +4,57 @@
 #include "../transformations.h"
 #include "../vector.h"
 
-using namespace asf::geometry;
+namespace a_g = asf::geometry;
 
-VehicleFrame::VehicleFrame()
+a_g::VehicleFrame::VehicleFrame()
     : FrameImpl(nullptr)
 {
 }
 
-Vector VehicleFrame::to(const Vector& from, FrameType toType) const
+a_g::Vector a_g::VehicleFrame::to(const Vector& from, FrameType toType) const
 {
   if (parent_ == nullptr && toType != type()) {
-    throw false;
+    throw std::invalid_argument("No parent to unwind to");
   }
   return FrameImpl::to(from, toType);
 }
 
-Vector VehicleFrame::to(const Vector& from, const Frame* frameTo) const
+a_g::Vector a_g::VehicleFrame::to(const Vector& from, const Frame* frameTo) const
 {
   if (parent_ == nullptr && frameTo != this) {
-    throw false;
+    throw std::invalid_argument("No parent to unwind to");
   }
   return FrameImpl::to(from, frameTo);
 }
 
-StateVectorSP VehicleFrame::getState()
+a_g::StateVectorSP a_g::VehicleFrame::getState()
 {
   return state_;
 }
 
-void VehicleFrame::update(StateVectorSP stateVector)
+void a_g::VehicleFrame::update(StateVectorSP stateVector)
 {
-  state_ = stateVector;
+  state_ = std::move(stateVector);
 }
 
-void VehicleFrame::attach(const Frame* parent)
+void a_g::VehicleFrame::attach(const Frame* parent)
 {
   parent_ = parent;
   state_ = std::make_shared<StateVector>(parent_);
 }
 
-bool VehicleFrame::equals(const Frame& other) const
+bool a_g::VehicleFrame::equals(const Frame& other) const
 {
-  return true;
+  (void) other;
+  return true; // WARNING: fix!
 }
 
-Vector VehicleFrame::unwind(const Vector& from) const
+a_g::Vector a_g::VehicleFrame::unwind(const Vector& from) const
 {
   return from; // WARNING: define unwind
 }
 
-Vector VehicleFrame::embed(const Vector& from) const
+a_g::Vector a_g::VehicleFrame::embed(const Vector& from) const
 {
   return from; // WARNING: define embed
 }

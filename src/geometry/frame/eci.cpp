@@ -2,25 +2,25 @@
 
 #include "../vector.h"
 
-using namespace asf::geometry;
+namespace a_g = asf::geometry;
 
-ECI::ECI(const Frame* parent)
+a_g::ECI::ECI(const Frame* parent)
     : FrameImpl(parent)
 {
 }
 
-bool ECI::equals(const Frame& other) const
+bool a_g::ECI::equals(const Frame& other) const
 {
   (void)other;
   return true;
 }
 
-Vector ECI::unwind(const Vector& from) const
+a_g::Vector a_g::ECI::unwind(const Vector& from) const
 {
   return from;
 }
 
-Vector ECI::embed(const Vector& from) const
+a_g::Vector a_g::ECI::embed(const Vector& from) const
 {
   return from;
 }

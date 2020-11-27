@@ -8,9 +8,10 @@ enable_testing()
 set(TEST_TIDY_FLAGS "\
 -cppcoreguidelines-special-member-functions,-cppcoreguidelines-owning-memory,-cppcoreguidelines-avoid-magic-numbers,\
 -cppcoreguidelines-avoid-goto,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-type-member-init,\
--cppcoreguidelines-non-private-member-variables-in-classes,-misc-non-private-member-variables-in-classes,\
+-cppcoreguidelines-non-private-member-variables-in-classes,-cppcoreguidelines-avoid-non-const-global-variables,\
 -hicpp-special-member-functions,-hicpp-avoid-goto,-hicpp-vararg,-hicpp-member-init,\
--readability-magic-numbers,-fuchsia-statically-constructed-objects")
+-readability-magic-numbers,-fuchsia-statically-constructed-objects,-google-build-using-namespace,-llvmlibc-*,\
+-misc-non-private-member-variables-in-classes")
 
 set(TEST_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testvector.cpp"

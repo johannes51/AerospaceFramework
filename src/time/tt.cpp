@@ -1,13 +1,8 @@
 #include "tt.h"
 
-using namespace asf::time;
+namespace a_t = asf::time;
 
-TT::TT()
+a_t::TT::TT(const TimePoint& timePoint)
+    : CalendarTime(timePoint)
 {
 }
-
-TT::TT(const TimePoint& timePoint)
-  : CalendarTime(timePoint)
-{
-}
-

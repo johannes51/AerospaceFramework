@@ -1,15 +1,13 @@
 #ifndef MODIFIEDJULIANDATE_H
 #define MODIFIEDJULIANDATE_H
 
-#include "scaledjulianlike.h"
 #include "classicaljuliandate.h"
+#include "scaledjulianlike.h"
 
 namespace asf {
 namespace time {
 
-template<typename Scale>
-class ModifiedJulianDate : public ScaledJulianLike<Scale>
-{
+template <typename Scale> class ModifiedJulianDate : public ScaledJulianLike<Scale> {
 public:
   virtual ~ModifiedJulianDate() = default;
 
@@ -23,26 +21,22 @@ public:
   virtual Scale toCalendar() const override;
 };
 
-template<typename Scale>
-int ModifiedJulianDate<Scale>::dayNumber() const
+template <typename Scale> int ModifiedJulianDate<Scale>::dayNumber() const
 {
   return 0;
 }
 
-template<typename Scale>
-double ModifiedJulianDate<Scale>::dayFraction() const
+template <typename Scale> double ModifiedJulianDate<Scale>::dayFraction() const
 {
   return 0;
 }
 
-template<typename Scale>
-ClassicalJulianDate<Scale> ModifiedJulianDate<Scale>::toClassical() const
+template <typename Scale> ClassicalJulianDate<Scale> ModifiedJulianDate<Scale>::toClassical() const
 {
   return ClassicalJulianDate<Scale>();
 }
 
-template<typename Scale>
-Scale ModifiedJulianDate<Scale>::toCalendar() const
+template <typename Scale> Scale ModifiedJulianDate<Scale>::toCalendar() const
 {
   return toClassical().toCalendar();
 }

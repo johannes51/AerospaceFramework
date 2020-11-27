@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "geometry/frame/wgs84.h"
 #include "geometry/frame/eci.h"
+#include "geometry/frame/wgs84.h"
 #include "geometry/vector.h"
 #include "time/utc.h"
 

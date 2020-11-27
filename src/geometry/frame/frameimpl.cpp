@@ -2,35 +2,35 @@
 
 #include "../vector.h"
 
-using namespace asf::geometry;
+namespace a_g = asf::geometry;
 
-FrameImpl::FrameImpl(const Frame* parent)
+a_g::FrameImpl::FrameImpl(const Frame* parent)
     : parent_(parent)
 {
 }
 
-Vector FrameImpl::to(const Vector& from) const
+a_g::Vector a_g::FrameImpl::to(const Vector& from) const
 {
   return to(from, this);
 }
 
-Vector FrameImpl::to(const Vector& from, FrameType toType) const
+a_g::Vector a_g::FrameImpl::to(const Vector& from, FrameType toType) const
 {
   if (toType == FrameType::Other) {
-    throw false;
+    throw std::invalid_argument("Cannot convert to FrameType Other, pass Frame* instead");
   }
   auto result = from;
-  if (toType == type()) {
-    return result;
-  } else {
-    if (parent_ == nullptr) { throw false; }
+  if (toType != type()) {
+    if (parent_ == nullptr) {
+      throw std::invalid_argument("Need parent to undwind to");
+    }
     result = unwind(from);
     return parent_->to(result, toType);
   }
   return result;
 }
 
-Vector FrameImpl::to(const Vector& from, const Frame* frameTo) const
+a_g::Vector a_g::FrameImpl::to(const Vector& from, const Frame* frameTo) const
 {
   if (frameTo == this) {
     if (from.frame() == this) {
@@ -38,30 +38,32 @@ Vector FrameImpl::to(const Vector& from, const Frame* frameTo) const
     } else if (from.frame() == parent()) {
       return embed(from);
     } else {
-      throw false;
+      throw std::invalid_argument("Cannot unwind or embed");
     }
   } else {
-    if (parent_ == nullptr) { throw false; }
+    if (parent_ == nullptr) {
+      throw std::invalid_argument("No parent to unwind to");
+    }
     return parent_->to(unwind(from), frameTo);
   }
 }
 
-bool FrameImpl::operator==(const Frame& other) const
+bool a_g::FrameImpl::operator==(const Frame& other) const
 {
   return typeid(*this) == typeid(other) && parent() == other.parent() && equals(other);
 }
 
-bool FrameImpl::operator!=(const Frame& other) const
+bool a_g::FrameImpl::operator!=(const Frame& other) const
 {
   return !(*this == other);
 }
 
-const Frame* FrameImpl::parent() const
+const a_g::Frame* a_g::FrameImpl::parent() const
 {
   return parent_;
 }
 
-void FrameImpl::setParent(const Frame* value)
+void a_g::FrameImpl::setParent(const Frame* value)
 {
   parent_ = value;
 }

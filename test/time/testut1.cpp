@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "time/conversions.h"
 #include "time/ut1.h"
 #include "time/utc.h"
-#include "time/conversions.h"
 
 using namespace asf::time;
 

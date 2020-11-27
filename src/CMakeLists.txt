@@ -66,6 +66,10 @@ target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_
 target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen)
 
 cxx_17(AerospaceFramework_lib)
+enable_wall(AerospaceFramework_lib)
+clang_format(format_AerospaceFramework_lib AerospaceFramework_lib)
+clang_tidy(AerospaceFramework_lib "-checks=${CLANG_TIDY_STD_FLAGS}")
+cppcheck(AerospaceFramework_lib)
 
 configure_file(
   "${CMAKE_CURRENT_LIST_DIR}/../data/dut1.csv"

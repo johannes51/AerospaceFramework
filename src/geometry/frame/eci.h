@@ -8,7 +8,7 @@ namespace geometry {
 
 class ECI : public FrameImpl {
 public:
-  ECI(const Frame* parent);
+  explicit ECI(const Frame* parent);
   virtual ~ECI() = default;
   ASF_DISABLE_COPY_AND_MOVE(ECI)
 

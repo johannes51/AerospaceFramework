@@ -6,10 +6,9 @@
 namespace asf {
 namespace time {
 
-class TT : public CalendarTime
-{
+class TT : public CalendarTime {
 public:
-  TT();
+  TT() = default;
   explicit TT(const TimePoint& timePoint);
 };
 
