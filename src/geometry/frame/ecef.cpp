@@ -23,15 +23,15 @@ a_g::ECEF::ECEF(const Frame* parent, const time::Time& time)
   double x = 0.;
   double y = 0.;
   iauXy06(jdTt.first, jdTt.second, &x, &y);
-  double rc2t[3][3], rtc2[3][3];
-  iauC2t06a(jdTai.first, jdTai.second, jdUt1.first, jdUt1.second, x, y, rc2t);
-  iauTr(rc2t, rtc2);
+  double rc2t[3][3], rtc2[3][3]; // NOLINT
+  iauC2t06a(jdTai.first, jdTai.second, jdUt1.first, jdUt1.second, x, y, rc2t); // NOLINT
+  iauTr(rc2t, rtc2); // NOLINT
   auto rotationIn = std::make_shared<Tensor>(parent_);
   auto rotationOut = std::make_shared<Tensor>(this);
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      rotationIn->element(i, j) = rc2t[i][j];
-      rotationOut->element(i, j) = rtc2[i][j];
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 2; ++j) {
+      rotationIn->element(i, j) = rc2t[i][j]; // NOLINT
+      rotationOut->element(i, j) = rtc2[i][j]; // NOLINT
     }
   }
   rotationIn_ = rotationIn;

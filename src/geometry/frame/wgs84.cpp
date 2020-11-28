@@ -50,6 +50,7 @@ a_g::Vector a_g::Wgs84::embed(const Vector& from) const
   const auto yE = ecef.element(1);
   const auto zE = ecef.element(2);
 
+  // TODO: complete rework?
   const auto p = sqrt(pow(xE, 2.) * pow(yE, 2.));
   const auto ESq = a * a - b * b;
   const auto F = 54. * b * b * zE * zE;
@@ -67,7 +68,7 @@ a_g::Vector a_g::Wgs84::embed(const Vector& from) const
 
   result.element(0) = atan((zE + ePrimeSq * z0) / p);
   result.element(1) = atan2(yE, xE);
-  result.element(2) = U * (1. - pow(b, 2.) / (a * V));
+  result.element(2) = U * (1. - pow(b, 2.) / (a * V)); // NOLINT
 
   return result;
 }
