@@ -5,6 +5,7 @@ namespace a_g = asf::geometry;
 a_g::Vector::Vector(const Frame* frame, TransformationBehaviour behavesAs)
     : frame_(frame)
     , behavesAs_(behavesAs)
+    , vector_()
 {
 }
 

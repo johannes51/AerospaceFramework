@@ -1,0 +1,3 @@
+---
+Checks: '*,-readability-redundant-member-init,-readability-else-after-return,-llvm-else-after-return,-llvmlibc-*,-cert-err58-cpp,-android-*,-fuchsia-*,-clang-diagnostic-reorder,-clang-diagnostic-missing-declarations,-clang-diagnostic-error,-clang-diagnostic-unused-parameter,-google-runtime-references,-google-runtime-int,-google-readability-todo,-modernize-use-trailing-return-type,-modernize-use-default-member-init'
+...

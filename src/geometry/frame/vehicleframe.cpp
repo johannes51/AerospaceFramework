@@ -8,6 +8,7 @@ namespace a_g = asf::geometry;
 
 a_g::VehicleFrame::VehicleFrame()
     : FrameImpl(nullptr)
+    , state_()
 {
 }
 

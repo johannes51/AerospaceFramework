@@ -24,7 +24,10 @@ public:
   const TimePoint& timePoint() { return timePoint_; }
 
 protected:
-  CalendarTime() = default;
+  CalendarTime()
+      : timePoint_()
+  {
+  }
   CalendarTime(const TimePoint& timePoint)
       : timePoint_(timePoint)
   {

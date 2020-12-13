@@ -7,6 +7,8 @@ namespace a_g = asf::geometry;
 
 a_g::Local::Local()
     : FrameImpl(nullptr)
+    , offset_()
+    , rotation_()
 {
 }
 

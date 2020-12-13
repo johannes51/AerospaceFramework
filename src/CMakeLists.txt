@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
 if (NOT MSVC)
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -fno-omit-frame-pointer")
-  set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -fno-omit-frame-pointer")
+    set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer")
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../analysis;")
@@ -57,7 +57,7 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.cpp"
     ${SOFA_SRCS}
-)
+    )
 
 find_package(Eigen3 3.3.1 REQUIRED)
 
@@ -66,18 +66,23 @@ target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_
 target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen)
 
 cxx_17(AerospaceFramework_lib)
-enable_wall(AerospaceFramework_lib)
-clang_format(format_AerospaceFramework_lib AerospaceFramework_lib)
-clang_tidy(AerospaceFramework_lib "-checks=${CLANG_TIDY_STD_FLAGS}")
-cppcheck(AerospaceFramework_lib)
+if (UNIX AND CMAKE_BUILD_TYPE MATCHES "Debug")
+    enable_wall(AerospaceFramework_lib)
+    enable_effcpp(AerospaceFramework_lib)
+    clang_format(format_AerospaceFramework_lib AerospaceFramework_lib)
+    clang_tidy(AerospaceFramework_lib)
+    cppcheck(AerospaceFramework_lib)
+else()
+    enable_wnone(AerospaceFramework_lib)
+endif()
 
 configure_file(
-  "${CMAKE_CURRENT_LIST_DIR}/../data/dut1.csv"
-  "${CMAKE_CURRENT_BINARY_DIR}/data/dut1.csv"
-  COPYONLY)
+    "${CMAKE_CURRENT_LIST_DIR}/../data/dut1.csv"
+    "${CMAKE_CURRENT_BINARY_DIR}/data/dut1.csv"
+    COPYONLY)
 
 configure_file(
-  "${CMAKE_CURRENT_LIST_DIR}/../data/leap_seconds.csv"
-  "${CMAKE_CURRENT_BINARY_DIR}/data/leap_seconds.csv"
-  COPYONLY)
+    "${CMAKE_CURRENT_LIST_DIR}/../data/leap_seconds.csv"
+    "${CMAKE_CURRENT_BINARY_DIR}/data/leap_seconds.csv"
+    COPYONLY)
 
