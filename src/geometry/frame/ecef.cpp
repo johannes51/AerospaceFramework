@@ -12,7 +12,7 @@
 
 namespace a_g = asf::geometry;
 
-a_g::ECEF::ECEF(const Frame* parent, const time::Time& time)
+a_g::ECEF::ECEF(const a_g::Frame* parent, const asf::time::Time& time)
     : FrameImpl(parent)
     , rotationIn_()
     , rotationOut_()
