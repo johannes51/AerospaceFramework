@@ -76,6 +76,15 @@ else()
     enable_wnone(AerospaceFramework_lib)
 endif()
 
+find_package(Python3 COMPONENTS Interpreter)
+if (Python3_Interpreter_FOUND)
+    add_custom_command(TARGET AerospaceFramework_lib
+        POST_BUILD
+        COMMAND ${Python3_EXECUTABLE} ARGS download_data.py
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../script
+        )
+endif()
+
 configure_file(
     "${CMAKE_CURRENT_LIST_DIR}/../data/dut1.csv"
     "${CMAKE_CURRENT_BINARY_DIR}/data/dut1.csv"
