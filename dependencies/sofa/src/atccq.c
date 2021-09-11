@@ -1,94 +1,88 @@
 #include "sofa.h"
-#include "sofam.h"
 
-int iauTdbtcb(double tdb1, double tdb2, double *tcb1, double *tcb2)
+void iauAtccq(double rc, double dc,
+              double pr, double pd, double px, double rv,
+              iauASTROM *astrom, double *ra, double *da)
 /*
-**  - - - - - - - - - -
-**   i a u T d b t c b
-**  - - - - - - - - - -
+**  - - - - - - - - -
+**   i a u A t c c q
+**  - - - - - - - - -
 **
-**  Time scale transformation:  Barycentric Dynamical Time, TDB, to
-**  Barycentric Coordinate Time, TCB.
+**  Quick transformation of a star's ICRS catalog entry (epoch J2000.0)
+**  into ICRS astrometric place, given precomputed star-independent
+**  astrometry parameters.
+**
+**  Use of this function is appropriate when efficiency is important and
+**  where many star positions are to be transformed for one date.  The
+**  star-independent parameters can be obtained by calling one of the
+**  functions iauApci[13], iauApcg[13], iauApco[13] or iauApcs[13].
+**
+**  If the parallax and proper motions are zero the transformation has
+**  no effect.
 **
 **  This function is part of the International Astronomical Union's
 **  SOFA (Standards of Fundamental Astronomy) software collection.
 **
-**  Status:  canonical.
+**  Status:  support function.
 **
 **  Given:
-**     tdb1,tdb2  double    TDB as a 2-part Julian Date
+**     rc,dc  double     ICRS RA,Dec at J2000.0 (radians)
+**     pr     double     RA proper motion (radians/year, Note 3)
+**     pd     double     Dec proper motion (radians/year)
+**     px     double     parallax (arcsec)
+**     rv     double     radial velocity (km/s, +ve if receding)
+**     astrom iauASTROM* star-independent astrometry parameters:
+**      pmt    double       PM time interval (SSB, Julian years)
+**      eb     double[3]    SSB to observer (vector, au)
+**      eh     double[3]    Sun to observer (unit vector)
+**      em     double       distance from Sun to observer (au)
+**      v      double[3]    barycentric observer velocity (vector, c)
+**      bm1    double       sqrt(1-|v|^2): reciprocal of Lorenz factor
+**      bpn    double[3][3] bias-precession-nutation matrix
+**      along  double       longitude + s' (radians)
+**      xpl    double       polar motion xp wrt local meridian (radians)
+**      ypl    double       polar motion yp wrt local meridian (radians)
+**      sphi   double       sine of geodetic latitude
+**      cphi   double       cosine of geodetic latitude
+**      diurab double       magnitude of diurnal aberration vector
+**      eral   double       "local" Earth rotation angle (radians)
+**      refa   double       refraction constant A (radians)
+**      refb   double       refraction constant B (radians)
 **
 **  Returned:
-**     tcb1,tcb2  double    TCB as a 2-part Julian Date
-**
-**  Returned (function value):
-**                int       status:  0 = OK
+**     ra,da  double*    ICRS astrometric RA,Dec (radians)
 **
 **  Notes:
 **
-**  1) tdb1+tdb2 is Julian Date, apportioned in any convenient way
-**     between the two arguments, for example where tdb1 is the Julian
-**     Day Number and tdb2 is the fraction of a day.  The returned
-**     tcb1,tcb2 follow suit.
+**  1) All the vectors are with respect to BCRS axes.
 **
-**  2) The 2006 IAU General Assembly introduced a conventional linear
-**     transformation between TDB and TCB.  This transformation
-**     compensates for the drift between TCB and terrestrial time TT,
-**     and keeps TDB approximately centered on TT.  Because the
-**     relationship between TT and TCB depends on the adopted solar
-**     system ephemeris, the degree of alignment between TDB and TT over
-**     long intervals will vary according to which ephemeris is used.
-**     Former definitions of TDB attempted to avoid this problem by
-**     stipulating that TDB and TT should differ only by periodic
-**     effects.  This is a good description of the nature of the
-**     relationship but eluded precise mathematical formulation.  The
-**     conventional linear relationship adopted in 2006 sidestepped
-**     these difficulties whilst delivering a TDB that in practice was
-**     consistent with values before that date.
+**  2) Star data for an epoch other than J2000.0 (for example from the
+**     Hipparcos catalog, which has an epoch of J1991.25) will require a
+**     preliminary call to iauPmsafe before use.
 **
-**  3) TDB is essentially the same as Teph, the time argument for the
-**     JPL solar system ephemerides.
+**  3) The proper motion in RA is dRA/dt rather than cos(Dec)*dRA/dt.
 **
-**  Reference:
+**  Called:
+**     iauPmpx      proper motion and parallax
+**     iauC2s       p-vector to spherical
+**     iauAnp       normalize angle into range 0 to 2pi
 **
-**     IAU 2006 Resolution B3
-**
-**  This revision:  2021 May 11
+**  This revision:   2021 April 18
 **
 **  SOFA release 2021-05-12
 **
 **  Copyright (C) 2021 IAU SOFA Board.  See notes at end.
 */
 {
-
-/* 1977 Jan 1 00:00:32.184 TT, as two-part JD */
-   static const double t77td = DJM0 + DJM77;
-   static const double t77tf = TTMTAI/DAYSEC;
-
-/* TDB (days) at TAI 1977 Jan 1.0 */
-   static const double tdb0 = TDB0/DAYSEC;
-
-/* TDB to TCB rate */
-   static const double elbb = ELB/(1.0-ELB);
-
-   double d, f;
+   double p[3], w;
 
 
-/* Result, preserving date format but safeguarding precision. */
-   if ( fabs(tdb1) > fabs(tdb2) ) {
-      d = t77td - tdb1;
-      f  = tdb2 - tdb0;
-      *tcb1 = tdb1;
-      *tcb2 = f - ( d - ( f - t77tf ) ) * elbb;
-   } else {
-      d = t77td - tdb2;
-      f  = tdb1 - tdb0;
-      *tcb1 = f - ( d - ( f - t77tf ) ) * elbb;
-      *tcb2 = tdb2;
-   }
+/* Proper motion and parallax, giving BCRS coordinate direction. */
+   iauPmpx(rc, dc, pr, pd, px, rv, astrom->pmt, astrom->eb, p);
 
-/* Status (always OK). */
-   return 0;
+/* ICRS astrometric RA,Dec. */
+   iauC2s(p, &w, da);
+   *ra = iauAnp(w);
 
 /* Finished. */
 

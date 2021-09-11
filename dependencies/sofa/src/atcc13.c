@@ -1,94 +1,89 @@
 #include "sofa.h"
-#include "sofam.h"
 
-int iauTdbtcb(double tdb1, double tdb2, double *tcb1, double *tcb2)
+void iauAtcc13(double rc, double dc,
+               double pr, double pd, double px, double rv,
+               double date1, double date2,
+               double *ra, double *da)
 /*
 **  - - - - - - - - - -
-**   i a u T d b t c b
+**   i a u A t c c 1 3
 **  - - - - - - - - - -
 **
-**  Time scale transformation:  Barycentric Dynamical Time, TDB, to
-**  Barycentric Coordinate Time, TCB.
+**  Transform a star's ICRS catalog entry (epoch J2000.0) into ICRS
+**  astrometric place.
 **
 **  This function is part of the International Astronomical Union's
 **  SOFA (Standards of Fundamental Astronomy) software collection.
 **
-**  Status:  canonical.
+**  Status:  support function.
 **
 **  Given:
-**     tdb1,tdb2  double    TDB as a 2-part Julian Date
+**     rc     double   ICRS right ascension at J2000.0 (radians, Note 1)
+**     dc     double   ICRS declination at J2000.0 (radians, Note 1)
+**     pr     double   RA proper motion (radians/year, Note 2)
+**     pd     double   Dec proper motion (radians/year)
+**     px     double   parallax (arcsec)
+**     rv     double   radial velocity (km/s, +ve if receding)
+**     date1  double   TDB as a 2-part...
+**     date2  double   ...Julian Date (Note 3)
 **
 **  Returned:
-**     tcb1,tcb2  double    TCB as a 2-part Julian Date
-**
-**  Returned (function value):
-**                int       status:  0 = OK
+**     ra,da  double*  ICRS astrometric RA,Dec (radians)
 **
 **  Notes:
 **
-**  1) tdb1+tdb2 is Julian Date, apportioned in any convenient way
-**     between the two arguments, for example where tdb1 is the Julian
-**     Day Number and tdb2 is the fraction of a day.  The returned
-**     tcb1,tcb2 follow suit.
+**  1) Star data for an epoch other than J2000.0 (for example from the
+**     Hipparcos catalog, which has an epoch of J1991.25) will require a
+**     preliminary call to iauPmsafe before use.
 **
-**  2) The 2006 IAU General Assembly introduced a conventional linear
-**     transformation between TDB and TCB.  This transformation
-**     compensates for the drift between TCB and terrestrial time TT,
-**     and keeps TDB approximately centered on TT.  Because the
-**     relationship between TT and TCB depends on the adopted solar
-**     system ephemeris, the degree of alignment between TDB and TT over
-**     long intervals will vary according to which ephemeris is used.
-**     Former definitions of TDB attempted to avoid this problem by
-**     stipulating that TDB and TT should differ only by periodic
-**     effects.  This is a good description of the nature of the
-**     relationship but eluded precise mathematical formulation.  The
-**     conventional linear relationship adopted in 2006 sidestepped
-**     these difficulties whilst delivering a TDB that in practice was
-**     consistent with values before that date.
+**  2) The proper motion in RA is dRA/dt rather than cos(Dec)*dRA/dt.
 **
-**  3) TDB is essentially the same as Teph, the time argument for the
-**     JPL solar system ephemerides.
+**  3) The TDB date date1+date2 is a Julian Date, apportioned in any
+**     convenient way between the two arguments.  For example,
+**     JD(TDB)=2450123.7 could be expressed in any of these ways, among
+**     others:
 **
-**  Reference:
+**            date1          date2
 **
-**     IAU 2006 Resolution B3
+**         2450123.7           0.0       (JD method)
+**         2451545.0       -1421.3       (J2000 method)
+**         2400000.5       50123.2       (MJD method)
+**         2450123.5           0.2       (date & time method)
 **
-**  This revision:  2021 May 11
+**     The JD method is the most natural and convenient to use in cases
+**     where the loss of several decimal digits of resolution is
+**     acceptable.  The J2000 method is best matched to the way the
+**     argument is handled internally and will deliver the optimum
+**     resolution.  The MJD method and the date & time methods are both
+**     good compromises between resolution and convenience.  For most
+**     applications of this function the choice will not be at all
+**     critical.
+**
+**     TT can be used instead of TDB without any significant impact on
+**     accuracy.
+**
+**  Called:
+**     iauApci13    astrometry parameters, ICRS-CIRS, 2013
+**     iauAtccq     quick catalog ICRS to astrometric
+**
+**  This revision:   2021 April 18
 **
 **  SOFA release 2021-05-12
 **
 **  Copyright (C) 2021 IAU SOFA Board.  See notes at end.
 */
 {
+/* Star-independent astrometry parameters */
+   iauASTROM astrom;
 
-/* 1977 Jan 1 00:00:32.184 TT, as two-part JD */
-   static const double t77td = DJM0 + DJM77;
-   static const double t77tf = TTMTAI/DAYSEC;
-
-/* TDB (days) at TAI 1977 Jan 1.0 */
-   static const double tdb0 = TDB0/DAYSEC;
-
-/* TDB to TCB rate */
-   static const double elbb = ELB/(1.0-ELB);
-
-   double d, f;
+   double w;
 
 
-/* Result, preserving date format but safeguarding precision. */
-   if ( fabs(tdb1) > fabs(tdb2) ) {
-      d = t77td - tdb1;
-      f  = tdb2 - tdb0;
-      *tcb1 = tdb1;
-      *tcb2 = f - ( d - ( f - t77tf ) ) * elbb;
-   } else {
-      d = t77td - tdb2;
-      f  = tdb1 - tdb0;
-      *tcb1 = f - ( d - ( f - t77tf ) ) * elbb;
-      *tcb2 = tdb2;
-   }
+/* The transformation parameters. */
+   iauApci13(date1, date2, &astrom, &w);
 
-/* Status (always OK). */
-   return 0;
+/* Catalog ICRS (epoch J2000.0) to astrometric. */
+   iauAtccq(rc, dc, pr, pd, px, rv, &astrom, ra, da);
 
 /* Finished. */
 
