@@ -9,6 +9,7 @@ set(CLANG_TIDY_STD_FLAGS "*,-readability-redundant-member-init,-readability-else
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/analysis;")
 include(code-coverage)
+add_subdirectory(dependencies)
 add_subdirectory(src)
 if (NOT MSVC)
   add_subdirectory(test)
