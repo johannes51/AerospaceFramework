@@ -12,8 +12,6 @@ include(tools)
 include(compiler-options)
 include(cpp-standards)
 
-add_subdirectory(util/sofa)
-
 set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/time/calendartime.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.h"
@@ -63,7 +61,7 @@ find_package(Eigen3 3.3.1 REQUIRED)
 
 add_library(AerospaceFramework_lib ${LIB_SOURCES})
 target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen)
+target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen PRIVATE sofa)
 
 cxx_17(AerospaceFramework_lib)
 if (UNIX AND CMAKE_BUILD_TYPE MATCHES "Debug")

@@ -1,5 +1,7 @@
 #include "ecef.h"
 
+#include "sofa.h"
+
 #include "../tensor.h"
 #include "../vector.h"
 #include "time/conversions.h"
@@ -7,7 +9,6 @@
 #include "time/tt.h"
 #include "time/ut1.h"
 #include "time/utc.h"
-#include "util/sofa/sofa.h"
 #include "util/sofa_helper.h"
 
 namespace a_g = asf::geometry;
