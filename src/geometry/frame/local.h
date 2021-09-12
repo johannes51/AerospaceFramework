@@ -14,11 +14,11 @@ public:
   void attach(const Frame* value, VectorCSP offset, TensorCSP rotation);
 
 private:
-  virtual FrameType type() const override { return FrameType::Other; }
+  FrameType type() const override { return FrameType::Other; }
 
-  virtual bool equals(const Frame& other) const override;
-  virtual Vector unwind(const Vector& from) const override;
-  virtual Vector embed(const Vector& from) const override;
+  bool equals(const Frame& other) const override;
+  Vector unwind(const Vector& from) const override;
+  Vector embed(const Vector& from) const override;
 
 private:
   VectorCSP offset_;

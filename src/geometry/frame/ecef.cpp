@@ -18,9 +18,9 @@ a_g::ECEF::ECEF(const a_g::Frame* parent, const asf::time::Time& time)
     , rotationIn_()
     , rotationOut_()
 {
-  const auto jdTai = util::convertSofaJd(time::convert<time::TAI>(time));
-  const auto jdTt = util::convertSofaJd(time::convert<time::TT>(time));
-  const auto jdUt1 = util::convertSofaJd(time::convert<time::UT1>(time));
+  const auto jdTai = util::toSofaJd(time::convert<time::TAI>(time));
+  const auto jdTt = util::toSofaJd(time::convert<time::TT>(time));
+  const auto jdUt1 = util::toSofaJd(time::convert<time::UT1>(time));
   double x = 0.;
   double y = 0.;
   iauXy06(jdTt.first, jdTt.second, &x, &y);

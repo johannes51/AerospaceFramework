@@ -10,9 +10,9 @@ class FrameImpl : public Frame {
 public:
   ASF_DISABLE_COPY_AND_MOVE(FrameImpl)
 
-  virtual Vector to(const Vector& from) const override;
-  virtual Vector to(const Vector& from, FrameType toType) const override;
-  virtual Vector to(const Vector& from, const Frame* frameTo) const override;
+  Vector to(const Vector& from) const override;
+  Vector to(const Vector& from, FrameType toType) const override;
+  Vector to(const Vector& from, const Frame* frameTo) const override;
 
   virtual bool operator==(const Frame& other) const final;
   virtual bool operator!=(const Frame& other) const final;

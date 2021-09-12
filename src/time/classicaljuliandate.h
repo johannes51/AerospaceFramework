@@ -11,11 +11,11 @@ public:
   ClassicalJulianDate() = default;
   ClassicalJulianDate(const ClassicalJulianDate& other);
 
-  virtual double dayFraction() const override;
-  virtual int dayNumber() const override;
+  double dayFraction() const override;
+  int dayNumber() const override;
 
-  virtual ClassicalJulianDate<Scale> toClassical() const override;
-  virtual Scale toCalendar() const override;
+  ClassicalJulianDate<Scale> toClassical() const override;
+  Scale toCalendar() const override;
 };
 
 template <typename Scale> ClassicalJulianDate<Scale>::ClassicalJulianDate(const ClassicalJulianDate& other)
