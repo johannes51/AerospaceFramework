@@ -14,7 +14,7 @@ TEST(TaiTests, Construction)
 TEST(TaiTests, Conversion1)
 {
   UTC u({ 2020, 11, 20, 13, 33, 14 });
-  auto taiTp = convert<TAI>(u).timePoint();
+  auto taiTp = static_cast<TimePoint>(convert<TAI>(u));
   EXPECT_EQ(taiTp.year, 2020);
   EXPECT_EQ(taiTp.month, 11);
   EXPECT_EQ(taiTp.day, 20);
@@ -26,7 +26,7 @@ TEST(TaiTests, Conversion1)
 TEST(TaiTests, Conversion2)
 {
   TAI t({ 2020, 11, 20, 13, 32, 41 });
-  auto uTp = convert<UTC>(t).timePoint();
+  auto uTp = static_cast<TimePoint>(convert<UTC>(t));
   EXPECT_EQ(uTp.year, 2020);
   EXPECT_EQ(uTp.month, 11);
   EXPECT_EQ(uTp.day, 20);
@@ -38,7 +38,7 @@ TEST(TaiTests, Conversion2)
 TEST(TaiTests, Conversion3)
 {
   UTC u({ 1999, 9, 3, 7, 47, 53 });
-  auto taiTp = convert<TAI>(u).timePoint();
+  auto taiTp = static_cast<TimePoint>(convert<TAI>(u));
   EXPECT_EQ(taiTp.year, 1999);
   EXPECT_EQ(taiTp.month, 9);
   EXPECT_EQ(taiTp.day, 3);
@@ -50,7 +50,7 @@ TEST(TaiTests, Conversion3)
 TEST(TaiTests, Conversion4)
 {
   TAI tai({ 1999, 9, 3, 7, 47, 20 });
-  auto uTp = convert<UTC>(tai).timePoint();
+  auto uTp = static_cast<TimePoint>(convert<UTC>(tai));
   EXPECT_EQ(uTp.year, 1999);
   EXPECT_EQ(uTp.month, 9);
   EXPECT_EQ(uTp.day, 3);

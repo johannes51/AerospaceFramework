@@ -15,12 +15,14 @@ include(cpp-standards)
 set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/time/calendartime.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/classicaljuliandate.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_helpers.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_helpers.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_internals.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/conversion_internals.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketime.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketimeimp.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketimeimp.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/scaledjulianlike.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/time.h"
@@ -53,7 +55,6 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/asf_definitions.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.cpp"
     ${SOFA_SRCS}
     )
 

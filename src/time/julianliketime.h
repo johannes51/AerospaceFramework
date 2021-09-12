@@ -8,10 +8,10 @@ namespace time {
 
 class JulianLikeTime : public Time {
 public:
-  virtual ~JulianLikeTime() = default;
+  ~JulianLikeTime() override = default;
 
+  virtual int wholeDays() const = 0;
   virtual double dayFraction() const = 0;
-  virtual int dayNumber() const = 0;
 };
 
 } // namespace time

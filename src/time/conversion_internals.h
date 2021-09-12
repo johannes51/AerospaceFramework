@@ -4,10 +4,9 @@
 #include <type_traits>
 
 #include "calendartime.h"
-#include "classicaljuliandate.h"
+#include "conversion_helpers.h"
 #include "julianliketime.h"
 #include "modifiedjuliandate.h"
-#include "scaledjulianlike.h"
 #include "tai.h"
 #include "tt.h"
 #include "ut1.h"
@@ -26,14 +25,13 @@ namespace asf {
 namespace time {
 namespace internal {
 
-// Catch cases where both are the same
-template <typename ToTime, typename FromTime>
-typename std::enable_if_t<std::is_same_v<FromTime, ToTime>, ToTime> convertInternal(const FromTime& from)
+// (0b, unfortunately): Catch cases where both are the same
+template <typename ToTime> ToTime convertInternal(const ToTime& from)
 {
   return from;
 }
 
-// Catch unimplemented Cal->Cal
+// (1, partly): Catch unimplemented Cal->Cal
 template <typename ToTime, typename FromTime>
 typename std::enable_if_t<std::is_base_of_v<CalendarTime,
                               ToTime> & std::is_base_of_v<CalendarTime, FromTime> & !std::is_same_v<FromTime, ToTime>,
@@ -43,87 +41,167 @@ convertInternal(const FromTime& from)
   return ToTime::unimplemented(from);
 }
 
-// General Julian to general Julian (same scale) -> ClassicalJulian to general
-// Julian (same scale)
-template <typename ToTime>
-typename std::enable_if_t<std::is_base_of_v<JulianLikeTime, ToTime>, ToTime> convertInternal(
-    const ScaledJulianLike<typename ToTime::scale_type>& from)
+// (1, rest): Direct Cal -> Cal conversions
+// TT -> TAI
+template <> inline TAI convertInternal<TAI, TT>(const TT& from)
 {
-  return convertInternal<ToTime>(from.toClassical());
+  return TAI { conv_helpers::ttToTai(from) };
+}
+// UT1 -> TAI
+template <> inline TAI convertInternal<TAI, UT1>(const UT1& from)
+{
+  return TAI { conv_helpers::ut1ToTai(from) };
+}
+// UTC -> TAI
+template <> inline TAI convertInternal<TAI, UTC>(const UTC& from)
+{
+  return TAI { conv_helpers::utcToTai(from) };
+}
+// TAI -> TT
+template <> inline TT convertInternal<TT, TAI>(const TAI& from)
+{
+  return TT { conv_helpers::taiToTt(from) };
+}
+// UT1 -> TT
+template <> inline TT convertInternal<TT, UT1>(const UT1& from)
+{
+  return TT { conv_helpers::ut1ToTt(from) };
+}
+// UTC -> TT
+template <> inline TT convertInternal<TT, UTC>(const UTC& from)
+{
+  return TT { conv_helpers::utcToTt(from) };
+}
+// TAI -> UT1
+template <> inline UT1 convertInternal<UT1, TAI>(const TAI& from)
+{
+  return UT1 { conv_helpers::taiToUt1(from) };
+}
+// TT -> UT1
+template <> inline UT1 convertInternal<UT1, TT>(const TT& from)
+{
+  return UT1 { conv_helpers::ttToUt1(from) };
+}
+// UTC -> UT1
+template <> inline UT1 convertInternal<UT1, UTC>(const UTC& from)
+{
+  return UT1 { conv_helpers::utcToUt1(from) };
+}
+// UT1 -> UTC
+template <> inline UTC convertInternal<UTC, UT1>(const UT1& from)
+{
+  return UTC { conv_helpers::ut1ToUtc(from) };
+}
+// TAI -> UTC
+template <> inline UTC convertInternal<UTC, TAI>(const TAI& from)
+{
+  return UTC { conv_helpers::taiToUtc(from) };
+}
+// TT -> UTC
+template <> inline UTC convertInternal<UTC, TT>(const TT& from)
+{
+  return UTC { conv_helpers::ttToUtc(from) };
 }
 
-// General Julian to general Julian (different scales) -> ClassicalJulian to
-// general Julian (different scales)
-template <typename ToTime, typename FromScale>
-typename std::enable_if_t<std::is_base_of_v<JulianLikeTime, ToTime>, ToTime> convertInternal(
-    const ScaledJulianLike<FromScale>& from)
-{
-  auto a = from.toCalendar();
-  auto b = convertInternal<typename ToTime::scale_type>(a);
-  auto c = convertInternal<ClassicalJulianDate<typename ToTime::scale_type>>(b);
-  return convertInternal<ToTime>(c);
-}
-
-// General Julian to Calendar -> Calendar to Calendar
-template <typename ToTime, typename FromScale>
-typename std::enable_if_t<std::is_base_of_v<CalendarTime, ToTime>, ToTime> convertInternal(
-    const ScaledJulianLike<FromScale>& from)
-{
-  return convertInternal<ToTime>(from.toCalendar());
-}
-
-// Cal -> Julian
+// (2): Cal -> Julian Like (different scales or non-MJD)
 template <typename ToTime, typename FromTime>
-typename std::enable_if_t<std::is_base_of_v<JulianLikeTime, ToTime> & std::is_base_of_v<CalendarTime, FromTime>, ToTime>
+typename std::enable_if_t<
+    std::is_base_of_v<JulianLikeTime,
+        ToTime> & std::is_base_of_v<CalendarTime, FromTime>&(!std::is_same_v<typename ToTime::scale_type, FromTime> | !is_instantiation_of_v<ToTime, ModifiedJulianDate>),
+    ToTime>
 convertInternal(const FromTime& from)
 {
-  auto a = convertInternal<typename ToTime::scale_type>(from);
-  auto b = convertInternal<ClassicalJulianDate<typename ToTime::scale_type>>(a);
-  return convertInternal<ToTime>(b);
+  typedef typename ToTime::scale_type ToScale;
+  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<ToScale>>(convertInternal<ToScale>(from)));
 }
 
-// Calender to ClassicalJulian (same scale)
-template <typename ToTime>
-typename std::enable_if_t<std::is_base_of_v<JulianLikeTime, ToTime>, ToTime> convertInternal(
-    const typename ToTime::scale_type& from)
+// (5, partly): Catch unimplemented general Julian Like -> Modified Julian (same scale)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    is_instantiation_of_v<ToTime,
+        ModifiedJulianDate> & !is_instantiation_of_v<FromTime, ModifiedJulianDate> & std::is_base_of_v<JulianLikeTime, FromTime> & std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type>,
+    ToTime>
+convertInternal(const FromTime& from)
 {
-  (void)from;
-  return ToTime(); // TODO: implement
+  return ToTime::unimplemented(from);
 }
 
-// Classical to Modified Julian (same scale)
+// (5, rest): Direct general Julian Like -> Modified Julian conversions (same scale)
+// CJD -> MJD
 template <typename ToTime>
 typename std::enable_if_t<is_instantiation_of_v<ToTime, ModifiedJulianDate>, ToTime> convertInternal(
     const ClassicalJulianDate<typename ToTime::scale_type>& from)
 {
-  return ToTime(); // TODO: implement
+  return ToTime::fromMjdDataYourResponsibility(conv_helpers::cjdToMjd({ from.wholeDays(), from.dayFraction() }));
 }
 
-// Direct Cal -> Cal conversions
+// (8): Modified Julian -> Cal (same scale)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    std::is_base_of_v<CalendarTime,
+        ToTime> & is_instantiation_of_v<FromTime, ModifiedJulianDate> & std::is_same_v<ToTime, typename FromTime::scale_type>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return ToTime { conv_helpers::mjdToCal({ from.wholeDays(), from.dayFraction() }) };
+}
 
-template <> TAI convertInternal<TAI, TT>(const TT& from);
+// (3): Julian Like -> Cal (different scales or non-MJD)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    std::is_base_of_v<CalendarTime,
+        ToTime> & std::is_base_of_v<JulianLikeTime, FromTime>&(!std::is_same_v<ToTime, typename FromTime::scale_type> | !is_instantiation_of_v<FromTime, ModifiedJulianDate>),
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from));
+}
 
-template <> TAI convertInternal<TAI, UT1>(const UT1& from);
+// (4): Julian Like -> Julian Like (different types or different scales)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    std::is_base_of_v<JulianLikeTime,
+        ToTime> & std::is_base_of_v<JulianLikeTime, FromTime>&(!std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type> | !std::is_same_v<typename ToTime::base_type, typename FromTime::base_type>),
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename ToTime::scale_type>>(
+      convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
+}
 
-template <> TAI convertInternal<TAI, UTC>(const UTC& from);
+// (6): Direct Modified Julian -> general Julian Like conversions (same scale)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    !is_instantiation_of_v<ToTime,
+        ClassicalJulianDate> & is_instantiation_of_v<FromTime, ModifiedJulianDate> & std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return ToTime::fromCjdDataYourResponsibility(conv_helpers::mjdToCjd(from.wholeDays(), from.dayFraction()));
+}
 
-template <> TT convertInternal<TT, TAI>(const TAI& from);
+// (7): Cal -> Modified Julian (same scale)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    is_instantiation_of_v<ToTime,
+        ModifiedJulianDate> & std::is_base_of_v<CalendarTime, FromTime> & std::is_same_v<typename ToTime::scale_type, FromTime>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return ToTime::fromMjdDataYourResponsibility(conv_helpers::calToMjd(from));
+}
 
-template <> TT convertInternal<TT, UT1>(const UT1& from);
-
-template <> TT convertInternal<TT, UTC>(const UTC& from);
-
-template <> UT1 convertInternal<UT1, TAI>(const TAI& from);
-
-template <> UT1 convertInternal<UT1, TT>(const TT& from);
-
-template <> UT1 convertInternal<UT1, UTC>(const UTC& from);
-
-template <> UTC convertInternal<UTC, UT1>(const UT1& from);
-
-template <> UTC convertInternal<UTC, TAI>(const TAI& from);
-
-template <> UTC convertInternal<UTC, TT>(const TT& from);
+// (9): Modified Julian -> Modified Julian (different scales)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    is_instantiation_of_v<ToTime,
+        ModifiedJulianDate> & is_instantiation_of_v<FromTime, ModifiedJulianDate> & !std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return convertInternal<ToTime>(
+      convertInternal<typename ToTime::scale_type>(convertInternal<typename FromTime::scale_type>(from)));
+}
 
 } // namespace internal
 } // namespace time

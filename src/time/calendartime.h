@@ -19,9 +19,9 @@ struct TimePoint {
 
 class CalendarTime : public Time {
 public:
-  virtual ~CalendarTime() = default;
+  ~CalendarTime() override = 0;
 
-  const TimePoint& timePoint() { return timePoint_; }
+  operator TimePoint() const { return timePoint_; }
 
 protected:
   CalendarTime()
@@ -35,6 +35,8 @@ protected:
 
   TimePoint timePoint_;
 };
+
+inline CalendarTime::~CalendarTime() { }
 
 } // namespace time
 } // namespace asf
