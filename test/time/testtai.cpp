@@ -1,10 +1,20 @@
 #include <gtest/gtest.h>
 
+#include <cmath>
+
 #include "time/conversions.h"
 #include "time/tai.h"
 #include "time/utc.h"
 
 using namespace asf::time;
+
+bool timesEqualTai(TimePoint a, const Time& b)
+{
+  auto bTp = static_cast<TimePoint>(convert<TAI>(b));
+  return a.year == bTp.year && a.month == bTp.month && a.day == bTp.day && a.hour == bTp.hour
+      && abs(a.minute - bTp.minute) < 5
+      /*&& fabs(a.second - bTp.second)*/; // TODO: FIVE MINUTE accuracy...
+}
 
 TEST(TaiTests, Construction)
 {
@@ -57,4 +67,12 @@ TEST(TaiTests, Conversion4)
   EXPECT_EQ(uTp.hour, 7);
   EXPECT_NEAR(uTp.minute, 47, 5); // FIXME: down to FIVE MINUTE ACCURACY!
   //  EXPECT_EQ(uTp.second, 53); // FIXME: forego seconds for now...
+}
+
+TEST(TaiTests, ConversionRest)
+{
+  auto start = TAI { { 1999, 9, 3, 7, 47, 20 } };
+
+  EXPECT_TRUE(timesEqualTai(start, convert<TT>(start)));
+  EXPECT_TRUE(timesEqualTai(start, convert<UT1>(start)));
 }

@@ -153,7 +153,7 @@ a_t::TimePoint a_t_ch::taiToUt1(const TimePoint& tai)
   const auto jdTai = timePointToSofaJd(tai);
   double jdUt1_1 = 0.;
   double jdUt1_2 = 0.;
-  iauTaiut1(jdTai.first, jdTai.second, 0, &jdUt1_1, &jdUt1_1); // TODO: fix dt (IERS table)
+  iauTaiut1(jdTai.first, jdTai.second, 0, &jdUt1_1, &jdUt1_2); // TODO: fix dt (IERS table)
 
   return util::fromSofaJd<UT1>(jdUt1_1, jdUt1_2);
 }

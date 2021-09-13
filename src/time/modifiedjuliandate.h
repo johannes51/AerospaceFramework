@@ -13,8 +13,14 @@ public:
   typedef ModifiedJulianDate base_type;
 
   ModifiedJulianDate() = default;
-  static ModifiedJulianDate fromSofaJd(const double& jd1, const double& jd2);
-  static ModifiedJulianDate fromMjdDataYourResponsibility(JulianLikeTimeData&& data);
+  static ModifiedJulianDate fromSofaJd(const double& jd1, const double& jd2)
+  {
+    return ModifiedJulianDate { conv_helpers::sofaToMjdData({ jd1, jd2 }) };
+  }
+  static ModifiedJulianDate fromMjdDataYourResponsibility(JulianLikeTimeData&& data)
+  {
+    return ModifiedJulianDate { std::move(data) };
+  }
   virtual ~ModifiedJulianDate() = default;
 
   static constexpr int DayOffset = 2400000;
@@ -26,18 +32,6 @@ private:
   {
   }
 };
-
-template <typename Scale>
-ModifiedJulianDate<Scale> ModifiedJulianDate<Scale>::fromSofaJd(const double& jd1, const double& jd2)
-{
-  return ModifiedJulianDate { conv_helpers::sofaToMjdData({ jd1, jd2 }) };
-}
-
-template <typename Scale>
-ModifiedJulianDate<Scale> ModifiedJulianDate<Scale>::fromMjdDataYourResponsibility(JulianLikeTimeData&& data)
-{
-  return ModifiedJulianDate { std::move(data) };
-}
 
 } // namespace time
 } // namespace asf

@@ -9,6 +9,10 @@ namespace time {
 template <typename Scale> class ClassicalJulianDate : public JulianLikeTimeImp<Scale> {
 public:
   ClassicalJulianDate() = default;
+  static ClassicalJulianDate fromCjdDataYourResponsibility(JulianLikeTimeData&& data)
+  {
+    return ClassicalJulianDate { std::move(data) };
+  }
 
 protected:
   explicit ClassicalJulianDate(JulianLikeTimeData&& data)

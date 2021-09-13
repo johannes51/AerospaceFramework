@@ -103,6 +103,29 @@ template <> inline UTC convertInternal<UTC, TT>(const TT& from)
   return UTC { conv_helpers::ttToUtc(from) };
 }
 
+// (7): Cal -> Modified Julian (same scale)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    is_instantiation_of_v<ToTime,
+        ModifiedJulianDate> & std::is_base_of_v<CalendarTime, FromTime> & std::is_same_v<typename ToTime::scale_type, FromTime>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return ToTime::fromMjdDataYourResponsibility(conv_helpers::timePointToMjdData(from));
+}
+
+// (6): Direct Modified Julian -> general Julian Like conversions (same scale)
+// Classical JD
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    is_instantiation_of_v<ToTime,
+        ClassicalJulianDate> & is_instantiation_of_v<FromTime, ModifiedJulianDate> & std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type>,
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return ToTime::fromCjdDataYourResponsibility(conv_helpers::mjdToCjdData({ from.wholeDays(), from.dayFraction() }));
+}
+
 // (2): Cal -> Julian Like (different scales or non-MJD)
 template <typename ToTime, typename FromTime>
 typename std::enable_if_t<
@@ -154,7 +177,8 @@ typename std::enable_if_t<
     ToTime>
 convertInternal(const FromTime& from)
 {
-  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from));
+  return convertInternal<ToTime>(convertInternal<typename FromTime::scale_type>(
+      convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
 }
 
 // (4): Julian Like -> Julian Like (different types or different scales)
@@ -167,28 +191,6 @@ convertInternal(const FromTime& from)
 {
   return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename ToTime::scale_type>>(
       convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
-}
-
-// (6): Direct Modified Julian -> general Julian Like conversions (same scale)
-template <typename ToTime, typename FromTime>
-typename std::enable_if_t<
-    !is_instantiation_of_v<ToTime,
-        ClassicalJulianDate> & is_instantiation_of_v<FromTime, ModifiedJulianDate> & std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type>,
-    ToTime>
-convertInternal(const FromTime& from)
-{
-  return ToTime::fromCjdDataYourResponsibility(conv_helpers::mjdToCjdData(from.wholeDays(), from.dayFraction()));
-}
-
-// (7): Cal -> Modified Julian (same scale)
-template <typename ToTime, typename FromTime>
-typename std::enable_if_t<
-    is_instantiation_of_v<ToTime,
-        ModifiedJulianDate> & std::is_base_of_v<CalendarTime, FromTime> & std::is_same_v<typename ToTime::scale_type, FromTime>,
-    ToTime>
-convertInternal(const FromTime& from)
-{
-  return ToTime::fromMjdDataYourResponsibility(conv_helpers::timePointToMjdData(from));
 }
 
 // (9): Modified Julian -> Modified Julian (different scales)

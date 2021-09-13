@@ -17,7 +17,7 @@ namespace asf {
 namespace time {
 
 // (0): Catch cases where both are the same
-template <typename ToTime> const ToTime& convert(const ToTime& from)
+template <typename ToTime> std::enable_if_t<!std::is_abstract_v<ToTime>, const ToTime&> convert(const ToTime& from)
 {
   return from;
 }

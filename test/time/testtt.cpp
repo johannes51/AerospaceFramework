@@ -1,10 +1,20 @@
 #include <gtest/gtest.h>
 
+#include <cmath>
+
 #include "time/conversions.h"
 #include "time/tt.h"
 #include "time/utc.h"
 
 using namespace asf::time;
+
+bool timesEqualTt(TimePoint a, const Time& b)
+{
+  auto bTp = static_cast<TimePoint>(convert<TT>(b));
+  return a.year == bTp.year && a.month == bTp.month && a.day == bTp.day && a.hour == bTp.hour
+      && abs(a.minute - bTp.minute) < 5
+      /*&& fabs(a.second - bTp.second)*/; // TODO: FIVE MINUTE accuracy...
+}
 
 TEST(TtTests, Construction)
 {
@@ -57,4 +67,11 @@ TEST(TtTests, Conversion4)
   EXPECT_EQ(uTp.hour, 7);
   EXPECT_EQ(uTp.minute, 47);
   EXPECT_NEAR(uTp.second, 53, 1.); // FIXME: seconds accuracy
+}
+
+TEST(TtTests, ConversionRest)
+{
+  auto start = TT { { 1999, 9, 3, 7, 47, 20 } };
+
+  EXPECT_TRUE(timesEqualTt(start, convert<UT1>(start)));
 }

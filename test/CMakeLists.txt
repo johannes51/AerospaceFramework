@@ -24,6 +24,7 @@ set(TEST_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/mock/mocktensor.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/mock/mockvector.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testconv_helpers.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/testconversion.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testtai.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testtt.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testut1.cpp"
