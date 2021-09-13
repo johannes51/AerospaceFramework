@@ -8,12 +8,14 @@
 namespace asf {
 namespace util {
 
+// given MJD, actually solve it
 template <typename Scale> std::pair<double, double> toSofaJd(const time::ModifiedJulianDate<Scale>& from)
 {
   return { time::ModifiedJulianDate<Scale>::DayOffset + time::ModifiedJulianDate<Scale>::FractionOffset,
     from.wholeDays() + from.dayFraction() };
 }
 
+// given general JD, convert to MJD
 template <typename FromTime>
 std::enable_if_t<!std::is_base_of_v<time::CalendarTime, FromTime>, std::pair<double, double>> toSofaJd(
     const FromTime& from)
@@ -22,6 +24,7 @@ std::enable_if_t<!std::is_base_of_v<time::CalendarTime, FromTime>, std::pair<dou
   return toSofaJd(time::convert<time::ModifiedJulianDate<Scale>>(from));
 }
 
+// given Calendar time, convert to MJD
 template <typename FromTime>
 std::enable_if_t<std::is_base_of_v<time::CalendarTime, FromTime>, std::pair<double, double>> toSofaJd(
     const FromTime& from)

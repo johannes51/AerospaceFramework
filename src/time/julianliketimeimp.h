@@ -14,9 +14,6 @@ struct JulianLikeTimeData {
   double dayFraction;
 };
 
-JulianLikeTimeData decompose(long double jd);
-JulianLikeTimeData decompose(double jd1, double jd2);
-
 template <typename Scale> class JulianLikeTimeImp : public JulianLikeTime {
 public:
   typedef std::enable_if_t<std::is_base_of_v<CalendarTime, Scale>, Scale> scale_type;

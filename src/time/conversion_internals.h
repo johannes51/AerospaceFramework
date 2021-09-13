@@ -132,7 +132,7 @@ template <typename ToTime>
 typename std::enable_if_t<is_instantiation_of_v<ToTime, ModifiedJulianDate>, ToTime> convertInternal(
     const ClassicalJulianDate<typename ToTime::scale_type>& from)
 {
-  return ToTime::fromMjdDataYourResponsibility(conv_helpers::cjdToMjd({ from.wholeDays(), from.dayFraction() }));
+  return ToTime::fromMjdDataYourResponsibility(conv_helpers::cjdToMjdData({ from.wholeDays(), from.dayFraction() }));
 }
 
 // (8): Modified Julian -> Cal (same scale)
@@ -143,7 +143,7 @@ typename std::enable_if_t<
     ToTime>
 convertInternal(const FromTime& from)
 {
-  return ToTime { conv_helpers::mjdToCal({ from.wholeDays(), from.dayFraction() }) };
+  return ToTime { conv_helpers::mjdDataToTimePoint({ from.wholeDays(), from.dayFraction() }) };
 }
 
 // (3): Julian Like -> Cal (different scales or non-MJD)
@@ -177,7 +177,7 @@ typename std::enable_if_t<
     ToTime>
 convertInternal(const FromTime& from)
 {
-  return ToTime::fromCjdDataYourResponsibility(conv_helpers::mjdToCjd(from.wholeDays(), from.dayFraction()));
+  return ToTime::fromCjdDataYourResponsibility(conv_helpers::mjdToCjdData(from.wholeDays(), from.dayFraction()));
 }
 
 // (7): Cal -> Modified Julian (same scale)
@@ -188,7 +188,7 @@ typename std::enable_if_t<
     ToTime>
 convertInternal(const FromTime& from)
 {
-  return ToTime::fromMjdDataYourResponsibility(conv_helpers::calToMjd(from));
+  return ToTime::fromMjdDataYourResponsibility(conv_helpers::timePointToMjdData(from));
 }
 
 // (9): Modified Julian -> Modified Julian (different scales)

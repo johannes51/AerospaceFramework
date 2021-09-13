@@ -7,39 +7,64 @@
 namespace a_t = asf::time;
 namespace a_t_ch = a_t::conv_helpers;
 
-static constexpr auto HoursPerDay = 24.;
-static constexpr auto MinutesPerHour = 60.;
-static constexpr auto SecondsPerMinute = 60.;
+static constexpr auto HoursPerDay = 24.L;
+static constexpr auto MinutesPerHour = 60.L;
+static constexpr auto SecondsPerMinute = 60.L;
 
-std::pair<double, double> mjdToSofaJd(const a_t::JulianLikeTimeData& mjd)
+static constexpr auto OneAsFloatingPoint = 1.L;
+
+a_t::JulianLikeTimeData a_t_ch::cjdToMjdData(JulianLikeTimeData cjd)
 {
-  return { a_t::ModifiedJulianDate<a_t::TT>::DayOffset + a_t::ModifiedJulianDate<a_t::TT>::FractionOffset,
+  return { cjd.wholeDays - ModifiedJulianDate<TT>::DayOffset,
+    cjd.dayFraction - ModifiedJulianDate<TT>::FractionOffset };
+}
+
+a_t::JulianLikeTimeData a_t_ch::mjdToCjdData(JulianLikeTimeData mjd)
+{
+  return { mjd.wholeDays + ModifiedJulianDate<TT>::DayOffset,
+    mjd.dayFraction + ModifiedJulianDate<TT>::FractionOffset };
+}
+
+a_t::TimePoint a_t_ch::mjdDataToTimePoint(JulianLikeTimeData mjd)
+{
+  return sofaJdToTimePoint(mjdDataToSofaJd(mjd));
+}
+
+a_t::JulianLikeTimeData a_t_ch::timePointToMjdData(TimePoint cal)
+{
+  return sofaToMjdData(timePointToSofaJd(cal));
+}
+
+std::pair<double, double> a_t_ch::mjdDataToSofaJd(const JulianLikeTimeData& mjd)
+{
+  return { ModifiedJulianDate<TT>::DayOffset + ModifiedJulianDate<TT>::FractionOffset,
     mjd.wholeDays + mjd.dayFraction };
 }
 
-a_t::JulianLikeTimeData toMjdData(const std::pair<double, double>& mjd)
+a_t::JulianLikeTimeData a_t_ch::sofaToMjdData(const std::pair<double, double>& mjd)
 {
-  auto first = a_t::JulianLikeTimeData { static_cast<int>(mjd.first), mjd.first - static_cast<int>(mjd.first) };
-  auto second = a_t::JulianLikeTimeData { static_cast<int>(mjd.second), mjd.second - static_cast<int>(mjd.second) };
-  return { first.wholeDays + second.wholeDays - a_t::ModifiedJulianDate<a_t::TT>::DayOffset,
-    first.dayFraction + second.dayFraction - a_t::ModifiedJulianDate<a_t::TT>::FractionOffset };
+  auto first = JulianLikeTimeData { static_cast<int>(mjd.first), mjd.first - static_cast<int>(mjd.first) };
+  auto second = JulianLikeTimeData { static_cast<int>(mjd.second), mjd.second - static_cast<int>(mjd.second) };
+  return { first.wholeDays + second.wholeDays - ModifiedJulianDate<TT>::DayOffset,
+    first.dayFraction + second.dayFraction - ModifiedJulianDate<TT>::FractionOffset };
 }
 
-double decomposeDayFraction(const a_t::TimePoint& timePoint)
+double a_t_ch::decomposeDayFraction(const TimePoint& timePoint)
 {
-  return (timePoint.hour + (timePoint.minute + timePoint.second / SecondsPerMinute) / MinutesPerHour) / HoursPerDay;
+  return static_cast<double>(
+      (timePoint.hour + (timePoint.minute + timePoint.second / SecondsPerMinute) / MinutesPerHour) / HoursPerDay);
 }
 
-void reconstituteDayFraction(a_t::TimePoint& timePoint, double dayFraction)
+void a_t_ch::reconstituteDayFraction(TimePoint& timePoint, double dayFraction)
 {
-  const auto hourFraction = dayFraction * HoursPerDay;
+  const auto hourFraction = static_cast<long double>(dayFraction) * HoursPerDay;
   timePoint.hour = static_cast<uint8_t>(hourFraction);
-  auto minuteFraction = (hourFraction - timePoint.hour) * MinutesPerHour;
+  auto minuteFraction = fmodl(hourFraction, OneAsFloatingPoint) * MinutesPerHour;
   timePoint.minute = static_cast<uint8_t>(minuteFraction);
-  timePoint.second = (minuteFraction - timePoint.minute) * SecondsPerMinute;
+  timePoint.second = static_cast<double>(fmodl(minuteFraction, OneAsFloatingPoint) * SecondsPerMinute);
 }
 
-std::pair<double, double> timePointToSofaJd(const a_t::TimePoint& timePoint)
+std::pair<double, double> a_t_ch::timePointToSofaJd(const TimePoint& timePoint)
 {
   auto result = std::pair<double, double> { 0., 0. };
   iauCal2jd(timePoint.year, timePoint.month, timePoint.day, &result.first, &result.second);
@@ -47,9 +72,9 @@ std::pair<double, double> timePointToSofaJd(const a_t::TimePoint& timePoint)
   return result;
 }
 
-a_t::TimePoint sofaJdToTimePoint(const std::pair<double, double>& sofaJd)
+a_t::TimePoint a_t_ch::sofaJdToTimePoint(const std::pair<double, double>& sofaJd)
 {
-  auto result = a_t::TimePoint {};
+  auto result = TimePoint {};
   int month = 0;
   int day = 0;
   double dayFraction = 0.;
@@ -184,26 +209,4 @@ a_t::TimePoint a_t_ch::ttToUtc(const TimePoint& tt)
   iauTaiutc(jdTai1, jdTai2, &jdUtc1, &jdUtc2);
 
   return util::fromSofaJd<UTC>(jdUtc1, jdUtc2);
-}
-
-a_t::JulianLikeTimeData a_t_ch::cjdToMjd(JulianLikeTimeData cjd)
-{
-  return { cjd.wholeDays - ModifiedJulianDate<TT>::DayOffset,
-    cjd.dayFraction - ModifiedJulianDate<TT>::FractionOffset };
-}
-
-a_t::JulianLikeTimeData a_t_ch::mjdToCjd(JulianLikeTimeData mjd)
-{
-  return { mjd.wholeDays + ModifiedJulianDate<TT>::DayOffset,
-    mjd.dayFraction + ModifiedJulianDate<TT>::FractionOffset };
-}
-
-a_t::TimePoint a_t_ch::mjdToCal(JulianLikeTimeData mjd)
-{
-  return sofaJdToTimePoint(mjdToSofaJd(mjd));
-}
-
-a_t::JulianLikeTimeData a_t_ch::calToMjd(TimePoint cal)
-{
-  return toMjdData(timePointToSofaJd(cal));
 }

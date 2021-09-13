@@ -1,21 +1,11 @@
 #ifndef CALENDERTIME_H
 #define CALENDERTIME_H
 
-#include <cstdint>
-
 #include "time.h"
+#include "timepoint.h"
 
 namespace asf {
 namespace time {
-
-struct TimePoint {
-  int year;
-  uint8_t month;
-  uint8_t day;
-  uint8_t hour;
-  uint8_t minute;
-  double second;
-};
 
 class CalendarTime : public Time {
 public:

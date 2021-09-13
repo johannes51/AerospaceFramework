@@ -3,6 +3,8 @@
 
 #include "julianliketimeimp.h"
 
+#include "conversion_helpers.h"
+
 namespace asf {
 namespace time {
 
@@ -28,7 +30,7 @@ private:
 template <typename Scale>
 ModifiedJulianDate<Scale> ModifiedJulianDate<Scale>::fromSofaJd(const double& jd1, const double& jd2)
 {
-  return ModifiedJulianDate { decompose(jd1, jd2) };
+  return ModifiedJulianDate { conv_helpers::sofaToMjdData({ jd1, jd2 }) };
 }
 
 template <typename Scale>

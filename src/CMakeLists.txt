@@ -21,11 +21,11 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/time/conversions.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketime.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketimeimp.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/time/julianliketimeimp.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/modifiedjuliandate.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tai.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/time.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/timepoint.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/tt.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/ut1.h"
@@ -71,6 +71,8 @@ if (UNIX AND CMAKE_BUILD_TYPE MATCHES "Debug")
     clang_format(format_AerospaceFramework_lib AerospaceFramework_lib)
     clang_tidy(AerospaceFramework_lib)
     cppcheck(AerospaceFramework_lib)
+
+    target_code_coverage(AerospaceFramework_lib)
 else()
     enable_wnone(AerospaceFramework_lib)
 endif()

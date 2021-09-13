@@ -19,10 +19,16 @@ set(TEST_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testwgs84.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testecef.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testvehicleframe.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mock/mockcjd.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mock/mockstatevector.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mock/mocktensor.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mock/mockvector.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/time/testconv_helpers.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testtai.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testtt.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testut1.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/time/testutc.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/testsofa_helpers.cpp"
     )
 
 add_executable(AerospaceFramework_test ${TEST_SRCS})

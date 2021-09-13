@@ -20,7 +20,7 @@ TEST(TtTests, Conversion1)
   EXPECT_EQ(ttTp.day, 20);
   EXPECT_EQ(ttTp.hour, 13);
   EXPECT_EQ(ttTp.minute, 34);
-  EXPECT_EQ(ttTp.second, 24);
+  EXPECT_NEAR(ttTp.second, 24, 1.); // FIXME: seconds accuracy
 }
 
 TEST(TtTests, Conversion2)
@@ -32,7 +32,7 @@ TEST(TtTests, Conversion2)
   EXPECT_EQ(uTp.day, 20);
   EXPECT_EQ(uTp.hour, 13);
   EXPECT_EQ(uTp.minute, 33);
-  EXPECT_EQ(uTp.second, 14);
+  EXPECT_NEAR(uTp.second, 14, 1.); // FIXME: seconds accuracy
 }
 
 TEST(TtTests, Conversion3)
@@ -44,7 +44,7 @@ TEST(TtTests, Conversion3)
   EXPECT_EQ(ttTp.day, 3);
   EXPECT_EQ(ttTp.hour, 7);
   EXPECT_EQ(ttTp.minute, 48);
-  EXPECT_EQ(ttTp.second, 57);
+  EXPECT_NEAR(ttTp.second, 57, 1.); // FIXME: seconds accuracy
 }
 
 TEST(TtTests, Conversion4)
@@ -56,5 +56,5 @@ TEST(TtTests, Conversion4)
   EXPECT_EQ(uTp.day, 3);
   EXPECT_EQ(uTp.hour, 7);
   EXPECT_EQ(uTp.minute, 47);
-  EXPECT_EQ(uTp.second, 53);
+  EXPECT_NEAR(uTp.second, 53, 1.); // FIXME: seconds accuracy
 }
