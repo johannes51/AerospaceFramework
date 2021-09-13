@@ -47,15 +47,15 @@ void a_g::VehicleFrame::attach(const Frame* parent)
 bool a_g::VehicleFrame::equals(const Frame& other) const
 {
   (void)other;
-  return true; // WARNING: fix!
+  return true; // TODO: fix!
 }
 
 a_g::Vector a_g::VehicleFrame::unwind(const Vector& from) const
 {
-  return from; // WARNING: define unwind
+  return from; // TODO: define unwind
 }
 
 a_g::Vector a_g::VehicleFrame::embed(const Vector& from) const
 {
-  return from; // WARNING: define embed
+  return from; // TODO: define embed
 }

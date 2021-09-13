@@ -50,7 +50,7 @@ a_g::Vector a_g::Wgs84::embed(const Vector& from) const
   const auto yE = ecef.element(1);
   const auto zE = ecef.element(2);
 
-  // TODO: complete rework?
+  // TODO: complete rework? Test first!
   const auto p = sqrt(pow(xE, 2.) * pow(yE, 2.));
   const auto ESq = a * a - b * b;
   const auto F = 54. * b * b * zE * zE;

@@ -23,9 +23,9 @@ protected:
 private:
   StateVectorSP state_;
 
-  virtual bool equals(const Frame& other) const override;
-  virtual Vector unwind(const Vector& from) const override;
-  virtual Vector embed(const Vector& from) const override;
+  bool equals(const Frame& other) const override;
+  Vector unwind(const Vector& from) const override;
+  Vector embed(const Vector& from) const override;
 };
 
 } // namespace geometry
