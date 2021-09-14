@@ -18,9 +18,10 @@ a_g::ECEF::ECEF(const a_g::Frame* parent, const asf::time::Time& time)
     , rotationIn_()
     , rotationOut_()
 {
-  const auto jdTai = util::toSofaJd(time::convert<time::TAI>(time));
-  const auto jdTt = util::toSofaJd(time::convert<time::TT>(time));
-  const auto jdUt1 = util::toSofaJd(time::convert<time::UT1>(time));
+  // TODO: put somewhere else, then test
+  const auto jdTai = util::toSofaJd(time::convert<time::ModifiedJulianDate<time::TAI>>(time));
+  const auto jdTt = util::toSofaJd(time::convert<time::ModifiedJulianDate<time::TT>>(time));
+  const auto jdUt1 = util::toSofaJd(time::convert<time::ModifiedJulianDate<time::UT1>>(time));
   double x = 0.;
   double y = 0.;
   iauXy06(jdTt.first, jdTt.second, &x, &y);

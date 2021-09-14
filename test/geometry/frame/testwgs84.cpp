@@ -15,13 +15,18 @@ TEST(Wgs84Tests, Construction)
 
 TEST(Wgs84Tests, Unwind)
 {
+  using namespace std::chrono;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(/*sys_days{January/9/2014} + 2h + 35min + 34s*/));
-  auto vecWgs = std::make_shared<Vector>(wgs.get(), TransformationBehaviour::Position);
-  vecWgs->element(0) = 40;
-  vecWgs->element(1) = 40;
-  vecWgs->element(2) = 40;
+  std::tm timeinfo = tm();
+  timeinfo.tm_year = 2014 - 1900;
+  timeinfo.tm_mon = 1 - 1;
+  timeinfo.tm_mday = 9;
+  timeinfo.tm_hour = 2;
+  timeinfo.tm_min = 35;
+  timeinfo.tm_sec = 34;
+  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(std::chrono::system_clock::from_time_t(timegm(&timeinfo))));
+  auto vecWgs = std::make_shared<Vector>(wgs.get(), 40, 40, 40, TransformationBehaviour::Position);
   auto vecEci = wgs->to(*vecWgs, FrameType::ECI);
   EXPECT_NEAR(vecEci.element(0), -4.2848e6, 0.01e6);
   EXPECT_NEAR(vecEci.element(1), -2.3515e6, 0.01e6);

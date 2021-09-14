@@ -8,6 +8,8 @@ namespace time {
 
 template <typename Scale> class ClassicalJulianDate : public JulianLikeTimeImp<Scale> {
 public:
+  typedef ClassicalJulianDate base_type;
+
   ClassicalJulianDate() = default;
   static ClassicalJulianDate fromCjdDataYourResponsibility(JulianLikeTimeData&& data)
   {

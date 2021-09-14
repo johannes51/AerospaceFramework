@@ -181,18 +181,6 @@ convertInternal(const FromTime& from)
       convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
 }
 
-// (4): Julian Like -> Julian Like (different types or different scales)
-template <typename ToTime, typename FromTime>
-typename std::enable_if_t<
-    std::is_base_of_v<JulianLikeTime,
-        ToTime> & std::is_base_of_v<JulianLikeTime, FromTime>&(!std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type> | !std::is_same_v<typename ToTime::base_type, typename FromTime::base_type>),
-    ToTime>
-convertInternal(const FromTime& from)
-{
-  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename ToTime::scale_type>>(
-      convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
-}
-
 // (9): Modified Julian -> Modified Julian (different scales)
 template <typename ToTime, typename FromTime>
 typename std::enable_if_t<
@@ -203,6 +191,18 @@ convertInternal(const FromTime& from)
 {
   return convertInternal<ToTime>(
       convertInternal<typename ToTime::scale_type>(convertInternal<typename FromTime::scale_type>(from)));
+}
+
+// (4): Julian Like -> Julian Like (different types or different scales)
+template <typename ToTime, typename FromTime>
+typename std::enable_if_t<
+    std::is_base_of_v<JulianLikeTime,
+        ToTime> & std::is_base_of_v<JulianLikeTime, FromTime>&(!std::is_same_v<typename ToTime::scale_type, typename FromTime::scale_type> | !std::is_same_v<typename ToTime::base_type, typename FromTime::base_type>)&!(is_instantiation_of_v<FromTime, ModifiedJulianDate> & is_instantiation_of_v<ToTime, ModifiedJulianDate>),
+    ToTime>
+convertInternal(const FromTime& from)
+{
+  return convertInternal<ToTime>(convertInternal<ModifiedJulianDate<typename ToTime::scale_type>>(
+      convertInternal<ModifiedJulianDate<typename FromTime::scale_type>>(from)));
 }
 
 } // namespace internal

@@ -46,8 +46,8 @@ void a_g::VehicleFrame::attach(const Frame* parent)
 
 bool a_g::VehicleFrame::equals(const Frame& other) const
 {
-  (void)other;
-  return true; // TODO: fix!
+  const auto* otherVf = dynamic_cast<const VehicleFrame*>(&other);
+  return &other == this || (otherVf != nullptr && otherVf->state_ == state_);
 }
 
 a_g::Vector a_g::VehicleFrame::unwind(const Vector& from) const

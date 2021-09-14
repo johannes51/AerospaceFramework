@@ -27,6 +27,7 @@ a_g::Vector a_g::Wgs84::unwind(const Vector& from) const
     throw std::invalid_argument("Can only represent positions in WGS-84");
   }
   auto result = Vector(ecef_.get(), TransformationBehaviour::Position);
+  // TODO: put somewhere else, then test
   const auto& lat = from.element(0);
   const auto& lon = from.element(1);
   const auto& h = from.element(2);
@@ -45,12 +46,12 @@ a_g::Vector a_g::Wgs84::embed(const Vector& from) const
     throw std::invalid_argument("Can only represent positions in WGS-84");
   }
   auto result = Vector(this, TransformationBehaviour::Position);
+  // TODO: put somewhere else, then test
   const auto ecef = from.to(ecef_.get());
   const auto xE = ecef.element(0);
   const auto yE = ecef.element(1);
   const auto zE = ecef.element(2);
 
-  // TODO: complete rework? Test first!
   const auto p = sqrt(pow(xE, 2.) * pow(yE, 2.));
   const auto ESq = a * a - b * b;
   const auto F = 54. * b * b * zE * zE;
