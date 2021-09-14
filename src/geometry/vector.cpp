@@ -3,9 +3,7 @@
 namespace a_g = asf::geometry;
 
 a_g::Vector::Vector(const Frame* frame, TransformationBehaviour behavesAs)
-    : frame_(frame)
-    , behavesAs_(behavesAs)
-    , vector_()
+    : Vector(frame, Eigen::Vector3d {}, behavesAs)
 {
 }
 
@@ -13,6 +11,12 @@ a_g::Vector::Vector(const Frame* frame, Eigen::Vector3d eVector, TransformationB
     : frame_(frame)
     , behavesAs_(behavesAs)
     , vector_(std::move(eVector))
+{
+}
+
+asf::geometry::Vector::Vector(
+    const asf::geometry::Frame* frame, double x, double y, double z, asf::geometry::TransformationBehaviour behavesAs)
+    : Vector(frame, Eigen::Vector3d { x, y, z }, behavesAs)
 {
 }
 

@@ -20,6 +20,8 @@ public:
   Vector(const Frame* frame, TransformationBehaviour behavesAs = TransformationBehaviour::Vector);
   Vector(
       const Frame* frame, Eigen::Vector3d eVector, TransformationBehaviour behavesAs = TransformationBehaviour::Vector);
+  Vector(const Frame* frame, double x, double y, double z,
+      TransformationBehaviour behavesAs = TransformationBehaviour::Vector);
   virtual ~Vector() = default;
   Vector(const Vector&) = default;
   Vector& operator=(const Vector&) = default;

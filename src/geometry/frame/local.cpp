@@ -12,6 +12,13 @@ a_g::Local::Local()
 {
 }
 
+void asf::geometry::Local::attach(const asf::geometry::Frame* value, asf::geometry::VectorCSP offset)
+{
+  Eigen::Matrix3d m { { 1., 0., 0. }, { 0., 1., 0. }, { 0., 0., 1. } };
+  auto unity = std::make_shared<Tensor>(value, std::move(m));
+  attach(value, std::move(offset), unity);
+}
+
 void a_g::Local::attach(const Frame* value, VectorCSP offset, TensorCSP rotation)
 {
   parent_ = value;
@@ -35,7 +42,7 @@ a_g::Vector a_g::Local::unwind(const Vector& from) const
     return Vector(parent(), transformed, from.behavesAs());
     break;
   case TransformationBehaviour::Position:
-    return Vector(parent(), transformed - offset_->eVector(), from.behavesAs());
+    return Vector(parent(), transformed + offset_->eVector(), from.behavesAs());
     break;
   }
   return from;
@@ -46,7 +53,7 @@ a_g::Vector a_g::Local::embed(const Vector& from) const
   auto transformed = rotation_->eMatrix().transpose() * from.eVector();
   switch (from.behavesAs()) {
   case TransformationBehaviour::Position:
-    return Vector(this, transformed + offset_->eVector(), from.behavesAs());
+    return Vector(this, transformed - offset_->eVector(), from.behavesAs());
     break;
   default:
     return Vector(this, transformed, from.behavesAs());

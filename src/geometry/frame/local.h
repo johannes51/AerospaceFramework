@@ -11,6 +11,7 @@ public:
   Local();
   ASF_DISABLE_COPY_AND_MOVE(Local)
 
+  void attach(const Frame* value, VectorCSP offset);
   void attach(const Frame* value, VectorCSP offset, TensorCSP rotation);
 
 private:
