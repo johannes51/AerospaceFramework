@@ -40,6 +40,9 @@ target_include_directories(AerospaceFramework_test SYSTEM PRIVATE
     ${GTEST_INCLUDE_DIRS}
     ${GMOCK_INCLUDE_DIRS})
 
+get_target_property(Eigen_include_dirs Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(AerospaceFramework_test SYSTEM PRIVATE ${Eigen_include_dirs})
+
 gtest_add_tests(TARGET AerospaceFramework_test)
 add_dependencies(tests AerospaceFramework_test)
 

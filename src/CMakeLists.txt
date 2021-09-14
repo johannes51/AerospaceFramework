@@ -58,11 +58,14 @@ set(LIB_SOURCES
     ${SOFA_SRCS}
     )
 
-find_package(Eigen3 3.3.1 REQUIRED)
+find_package(Eigen3 3.4 REQUIRED)
 
 add_library(AerospaceFramework_lib ${LIB_SOURCES})
 target_include_directories(AerospaceFramework_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(AerospaceFramework_lib PUBLIC Eigen3::Eigen PRIVATE sofa)
+
+get_target_property(Eigen_include_dirs Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(AerospaceFramework_lib SYSTEM PRIVATE ${Eigen_include_dirs})
 
 cxx_17(AerospaceFramework_lib)
 if (UNIX AND CMAKE_BUILD_TYPE MATCHES "Debug")
