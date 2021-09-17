@@ -14,6 +14,7 @@ set(TEST_TIDY_FLAGS "\
     -misc-non-private-member-variables-in-classes")
 
 set(TEST_SRCS
+    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testtensor.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testvector.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testecef.cpp"
@@ -35,7 +36,7 @@ set(TEST_SRCS
 
 add_executable(AerospaceFramework_test ${TEST_SRCS})
 
-target_link_libraries(AerospaceFramework_test PRIVATE AerospaceFramework_lib gtest gtest_main pthread)
+target_link_libraries(AerospaceFramework_test PRIVATE AerospaceFramework_lib gtest pthread)
 target_include_directories(AerospaceFramework_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(AerospaceFramework_test SYSTEM PRIVATE
     ${GTEST_INCLUDE_DIRS}
