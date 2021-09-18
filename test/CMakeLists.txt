@@ -16,6 +16,7 @@ set(TEST_TIDY_FLAGS "\
 set(TEST_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testtensor.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testtransformation.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/testvector.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testecef.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/testlocal.cpp"

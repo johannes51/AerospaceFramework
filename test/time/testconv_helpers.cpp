@@ -5,7 +5,7 @@
 using namespace asf::time;
 using namespace asf::time::conv_helpers;
 
-static constexpr auto DaysPerS = 0.000012; // FIXME: down to seconds accuracy
+static constexpr auto DaysPerS = 0.000012; // WARNING: down to seconds accuracy
 
 TEST(ConvHelpers, CjdMjd)
 {
@@ -111,7 +111,7 @@ TEST(ConvHelpers, SofaJdTimePoint)
   EXPECT_EQ(tp.day, 17);
   EXPECT_EQ(tp.hour, 12);
   EXPECT_EQ(tp.minute, 1);
-  EXPECT_NEAR(tp.second, 30., 30.); // FIXME: down to half minute accuracy
+  EXPECT_NEAR(tp.second, 30., 30.); // WARNING: down to half minute accuracy
 }
 
 TEST(ConvHelpers, TaiTt)
@@ -124,8 +124,8 @@ TEST(ConvHelpers, TaiTt)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }
 
 TEST(ConvHelpers, TaiUt1)
@@ -138,8 +138,8 @@ TEST(ConvHelpers, TaiUt1)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }
 
 TEST(ConvHelpers, TaiUtc)
@@ -152,8 +152,8 @@ TEST(ConvHelpers, TaiUtc)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }
 
 TEST(ConvHelpers, TtUt1)
@@ -166,8 +166,8 @@ TEST(ConvHelpers, TtUt1)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }
 
 TEST(ConvHelpers, TtUtc)
@@ -180,8 +180,8 @@ TEST(ConvHelpers, TtUtc)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }
 
 TEST(ConvHelpers, Ut1Utc)
@@ -194,6 +194,6 @@ TEST(ConvHelpers, Ut1Utc)
   EXPECT_EQ(start.month, end.month);
   EXPECT_EQ(start.day, end.day);
   EXPECT_EQ(start.hour, end.hour);
-  EXPECT_NEAR(start.minute, end.minute, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_DOUBLE_EQ(start.second, end.second); // FIXME: forego seconds for now...
+  EXPECT_NEAR(start.minute, end.minute, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_DOUBLE_EQ(start.second, end.second); // NOTE: forego seconds for now...
 }

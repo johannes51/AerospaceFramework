@@ -18,7 +18,7 @@ TEST(VehicleFrameTests, Unwind)
   auto v = std::make_shared<VehicleFrame>();
   v->attach(eci.get());
   auto vecV = std::make_shared<Vector>(v.get(), 1, 1, 1, TransformationBehaviour::Position);
-  // TODO: actually test stuff (pos, speed of frame != 0)
+  // TODO: collect data
   auto vecEci = v->to(*vecV, FrameType::ECI);
 
   EXPECT_NEAR(vecEci.element(0), 1., 0.01e6);
@@ -32,7 +32,7 @@ TEST(VehicleFrameTests, Embed)
   auto v = std::make_shared<VehicleFrame>();
   v->attach(eci.get());
   auto vecEci = std::make_shared<Vector>(eci.get(), 1, 1, 1, TransformationBehaviour::Position);
-  // TODO: actually test stuff (pos, speed of frame != 0)
+  // TODO: collect data
   auto vecV = v->to(*vecEci, v.get());
 
   EXPECT_NEAR(vecV.element(0), 1., 0.01);

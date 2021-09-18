@@ -6,7 +6,16 @@
 #include "util/asf_definitions.h"
 
 namespace asf {
+
+namespace time {
+
+class Time;
+
+} // namespace time
+
 namespace geometry {
+
+class Frame;
 
 /**
  * @brief rotate calculates the rotation matrix in 3 dimensions for a angle
@@ -47,6 +56,30 @@ Tensor rotateZ(double angle);
  * @return returns a transformation matrix
  */
 Tensor calculateEulerMatrixInverse(double theta, double psi);
+
+/**
+ * @brief calculateEcefMatrices calculates the rotation matrix in and out
+ * of the ECEF system at a given time.
+ * @param time This is the given time.
+ * @return returns a pair of transformation matrixes (in, out)
+ */
+std::pair<TensorSP, TensorSP> calculateEcefMatrices(const time::Time& time, const Frame* parent, const Frame* ecef);
+
+/**
+ * @brief llaToVector Transforms a given position in LLA to a cartesian vector.
+ * @param vector This is the output vector.
+ * @param lat This is the latitude [rad].
+ * @param lat This is the longitude [rad].
+ * @param lat This is the altitude [m].
+ */
+void llaToVector(Vector& vector, double lat, double lon, double a);
+
+/**
+ * @brief vectorToLla Transforms a given position in LLA to a cartesian vector.
+ * @param to This is the output vector [rad, rad, m].
+ * @param from This is the ECEF input vector.
+ */
+void vectorToLla(Vector& to, const Vector& from);
 
 } // namespace geometry
 } // namespace asf

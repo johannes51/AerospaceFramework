@@ -20,7 +20,7 @@ TEST(Ut1Tests, Conversion1)
   EXPECT_EQ(ut1Tp.day, 9);
   EXPECT_EQ(ut1Tp.hour, 20);
   EXPECT_EQ(ut1Tp.minute, 35);
-  EXPECT_NEAR(ut1Tp.second, 34.1071961, 1.); // FIXME: seconds accuracy
+  EXPECT_NEAR(ut1Tp.second, 34.1071961, 1.); // WARNING: seconds accuracy
 }
 
 TEST(Ut1Tests, Conversion2)
@@ -32,7 +32,7 @@ TEST(Ut1Tests, Conversion2)
   EXPECT_EQ(utcTp.day, 9);
   EXPECT_EQ(utcTp.hour, 20);
   EXPECT_EQ(utcTp.minute, 35);
-  EXPECT_NEAR(utcTp.second, 34., 1.); // FIXME: seconds accuracy
+  EXPECT_NEAR(utcTp.second, 34., 1.); // WARNING: seconds accuracy
 }
 
 TEST(Ut1Tests, Conversion3)
@@ -44,7 +44,7 @@ TEST(Ut1Tests, Conversion3)
   EXPECT_EQ(ut1Tp.day, 15);
   EXPECT_EQ(ut1Tp.hour, 16);
   EXPECT_EQ(ut1Tp.minute, 35);
-  EXPECT_NEAR(ut1Tp.second, 34.9, 1.); // FIXME: seconds accuracy
+  EXPECT_NEAR(ut1Tp.second, 34.9, 1.); // WARNING: seconds accuracy
 }
 
 TEST(Ut1Tests, Conversion4)
@@ -56,5 +56,5 @@ TEST(Ut1Tests, Conversion4)
   EXPECT_EQ(utcTp.day, 15);
   EXPECT_EQ(utcTp.hour, 16);
   EXPECT_EQ(utcTp.minute, 35);
-  EXPECT_NEAR(utcTp.second, 34., 1.); // FIXME: seconds accuracy
+  EXPECT_NEAR(utcTp.second, 34., 1.); // WARNING: seconds accuracy
 }

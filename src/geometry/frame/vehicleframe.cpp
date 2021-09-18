@@ -1,7 +1,6 @@
 #include "vehicleframe.h"
 
 #include "../statevector.h"
-#include "../transformations.h"
 #include "../vector.h"
 
 namespace a_g = asf::geometry;

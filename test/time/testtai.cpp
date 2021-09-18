@@ -13,7 +13,7 @@ bool timesEqualTai(TimePoint a, const Time& b)
   auto bTp = static_cast<TimePoint>(convert<TAI>(b));
   return a.year == bTp.year && a.month == bTp.month && a.day == bTp.day && a.hour == bTp.hour
       && abs(a.minute - bTp.minute) < 5
-      /*&& fabs(a.second - bTp.second)*/; // TODO: FIVE MINUTE accuracy...
+      /*&& fabs(a.second - bTp.second)*/; // WARNING: FIVE MINUTE accuracy...
 }
 
 TEST(TaiTests, Construction)
@@ -29,8 +29,8 @@ TEST(TaiTests, Conversion1)
   EXPECT_EQ(taiTp.month, 11);
   EXPECT_EQ(taiTp.day, 20);
   EXPECT_EQ(taiTp.hour, 13);
-  EXPECT_NEAR(taiTp.minute, 32, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_EQ(taiTp.second, 41.); // FIXME: forego seconds for now...
+  EXPECT_NEAR(taiTp.minute, 32, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_EQ(taiTp.second, 41.); // NOTE: forego seconds for now...
 }
 
 TEST(TaiTests, Conversion2)
@@ -41,8 +41,8 @@ TEST(TaiTests, Conversion2)
   EXPECT_EQ(uTp.month, 11);
   EXPECT_EQ(uTp.day, 20);
   EXPECT_EQ(uTp.hour, 13);
-  EXPECT_NEAR(uTp.minute, 33, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_EQ(uTp.second, 14); // FIXME: forego seconds for now...
+  EXPECT_NEAR(uTp.minute, 33, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_EQ(uTp.second, 14); // NOTE: forego seconds for now...
 }
 
 TEST(TaiTests, Conversion3)
@@ -53,8 +53,8 @@ TEST(TaiTests, Conversion3)
   EXPECT_EQ(taiTp.month, 9);
   EXPECT_EQ(taiTp.day, 3);
   EXPECT_EQ(taiTp.hour, 7);
-  EXPECT_NEAR(taiTp.minute, 47, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_EQ(taiTp.second, 20); // FIXME: forego seconds for now...
+  EXPECT_NEAR(taiTp.minute, 47, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_EQ(taiTp.second, 20); // NOTE: forego seconds for now...
 }
 
 TEST(TaiTests, Conversion4)
@@ -65,8 +65,8 @@ TEST(TaiTests, Conversion4)
   EXPECT_EQ(uTp.month, 9);
   EXPECT_EQ(uTp.day, 3);
   EXPECT_EQ(uTp.hour, 7);
-  EXPECT_NEAR(uTp.minute, 47, 5); // FIXME: down to FIVE MINUTE ACCURACY!
-  //  EXPECT_EQ(uTp.second, 53); // FIXME: forego seconds for now...
+  EXPECT_NEAR(uTp.minute, 47, 5); // WARNING: down to FIVE MINUTE ACCURACY!
+  //  EXPECT_EQ(uTp.second, 53); // NOTE: forego seconds for now...
 }
 
 TEST(TaiTests, ConversionRest)
