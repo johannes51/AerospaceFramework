@@ -37,7 +37,7 @@ set(TEST_SRCS
 
 add_executable(AerospaceFramework_test ${TEST_SRCS})
 
-target_link_libraries(AerospaceFramework_test PRIVATE AerospaceFramework_lib gtest pthread)
+target_link_libraries(AerospaceFramework_test PRIVATE AerospaceFramework_lib gtest pthread date::date)
 target_include_directories(AerospaceFramework_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(AerospaceFramework_test SYSTEM PRIVATE
     ${GTEST_INCLUDE_DIRS}

@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "date/date.h"
+
 #include "geometry/frame/eci.h"
 #include "geometry/frame/wgs84.h"
 #include "geometry/vector.h"
@@ -33,9 +35,10 @@ TEST(Wgs84Tests, Unwind)
 
 TEST(Wgs84Tests, Embed)
 {
+  using namespace date;
   using namespace std::chrono_literals;
   auto eci = std::make_shared<ECI>(nullptr);
-  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(/*sys_days { January / 9 / 2014 } + 2h + 35min + 34s*/));
+  auto wgs = std::make_shared<Wgs84>(eci.get(), time::UTC(sys_days { January / 9 / 2014 } + 2h + 35min + 34s));
   auto vecEci = std::make_shared<Vector>(eci.get(), TransformationBehaviour::Position);
   vecEci->element(0) = 4e6;
   vecEci->element(1) = 4e6;
