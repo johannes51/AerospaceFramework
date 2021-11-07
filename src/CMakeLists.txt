@@ -54,6 +54,10 @@ set(LIB_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/geometry/frame/vehicleframe.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/asf_definitions.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/bilinearinterpolator.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/bilinearinterpolator.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/interpolatorfactory.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/interpolatorfactory.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/util/sofa_helper.h"
     ${SOFA_SRCS}
     )
