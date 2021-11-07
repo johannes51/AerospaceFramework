@@ -27,8 +27,8 @@ std::pair<asf::geometry::TensorSP, asf::geometry::TensorSP> asf::geometry::calcu
   iauTr(rc2t, rtc2); // NOLINT
   auto rotationIn = std::make_shared<Tensor>(parent);
   auto rotationOut = std::make_shared<Tensor>(ecef);
-  for (int i = 0; i < 2; ++i) {
-    for (int j = 0; j < 2; ++j) {
+  for (int i = 0; i <= 2; ++i) {
+    for (int j = 0; j <= 2; ++j) {
       rotationIn->element(i, j) = rc2t[i][j]; // NOLINT
       rotationOut->element(i, j) = rtc2[i][j]; // NOLINT
     }
