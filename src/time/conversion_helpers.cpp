@@ -153,7 +153,7 @@ a_t::TimePoint a_t_ch::taiToUt1(const TimePoint& tai)
   const auto jdTai = timePointToSofaJd(tai);
   double jdUt1_1 = 0.;
   double jdUt1_2 = 0.;
-  iauTaiut1(jdTai.first, jdTai.second, 0, &jdUt1_1, &jdUt1_2); // TODO: fix dt (IERS table)
+  iauTaiut1(jdTai.first, jdTai.second, 0, &jdUt1_1, &jdUt1_2); // TODO: fix dta (IERS table)
 
   return util::fromSofaJd<UT1>(jdUt1_1, jdUt1_2);
 }
@@ -163,7 +163,7 @@ a_t::TimePoint a_t_ch::ttToUt1(const TimePoint& tt)
   const auto jdTt = timePointToSofaJd(tt);
   double jdUt1_1 = 0.;
   double jdUt1_2 = 0.;
-  iauTtut1(jdTt.first, jdTt.second, 0, &jdUt1_1, &jdUt1_2);
+  iauTtut1(jdTt.first, jdTt.second, 0, &jdUt1_1, &jdUt1_2); // TODO: fix dt (IERS table)
 
   return util::fromSofaJd<UT1>(jdUt1_1, jdUt1_2);
 }
@@ -173,7 +173,7 @@ a_t::TimePoint a_t_ch::utcToUt1(const TimePoint& utc)
   const auto jdUtc = timePointToSofaJd(utc);
   double jdUt1_1 = 0.;
   double jdUt1_2 = 0.;
-  iauUtcut1(jdUtc.first, jdUtc.second, 0, &jdUt1_1, &jdUt1_2);
+  iauUtcut1(jdUtc.first, jdUtc.second, 0, &jdUt1_1, &jdUt1_2); // TODO: fix dut1 (IERS table)
 
   return util::fromSofaJd<UT1>(jdUt1_1, jdUt1_2);
 }
@@ -183,7 +183,7 @@ a_t::TimePoint a_t_ch::ut1ToUtc(const TimePoint& ut1)
   const auto jdUt1 = timePointToSofaJd(ut1);
   double jdUtc1 = 0.;
   double jdUtc2 = 0.;
-  iauUt1utc(jdUt1.first, jdUt1.second, 0, &jdUtc1, &jdUtc2);
+  iauUt1utc(jdUt1.first, jdUt1.second, 0, &jdUtc1, &jdUtc2); // TODO: fix dut1 (IERS table)
 
   return util::fromSofaJd<UTC>(jdUtc1, jdUtc2);
 }
